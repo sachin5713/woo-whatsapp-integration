@@ -93,8 +93,8 @@ class WC_Settings_Tab_WWN {
                 'desc_tip'      => true,
                 'desc'          => 'Select API Version',
                 'options'       => array(
-                          'v13_0' => __( 'v13.0' ),
-                          'v14_0' => __('v14.0')
+                          'v13.0' => __( 'v13.0' ),
+                          'v14.0' => __('v14.0')
                 )
             ),
             'thankyou_msg'   => array(

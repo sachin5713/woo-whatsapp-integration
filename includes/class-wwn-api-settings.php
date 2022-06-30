@@ -9,7 +9,7 @@ class WWN_Api_Settings{
         $this->api_url 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
     }
 
-    private function create_message_body($mobile, $body){
+    private function create_message_body($mobile, $body, $customer_name, $order_id){
     	$message_body   = str_replace(array('{{Customer Name}}', '{{Order Number}}'), array('*'.$customer_name.'*', '*#'.$order_id.'*'), $body);
     	$this->api_args = [ "messaging_product" => "whatsapp", 
 					   	  	"preview_url" => true, 
@@ -31,10 +31,10 @@ class WWN_Api_Settings{
     	return $this->curl_args;
     }
 
-	public function send_welcome_message($user_mobile){	 
+	public function send_welcome_message($user_mobile,$oder_id,$customer_name){	 
 		if(!empty($this->token)){
 			$get_message_body = $this->create_message_body($user_mobile,get_option( 'wc_setting_thank_template' ));
-			$args = $this->get_curl_args($get_message_body);
+			$args = $this->get_curl_args($get_message_body,$oder_id,$customer_name);
 			return json_decode(wp_remote_post( $whatsapp_url,$args )['body']);
 		}
 	}
@@ -68,7 +68,7 @@ class WWN_Api_Settings{
 		    $message_body = 'Nothing to Send';
 		}
 		
-		$get_message_body = $this->create_message_body($params['customer_mobile'],$message_body);
+		$get_message_body = $this->create_message_body($params['customer_mobile'], $message_body, $params['customer_name'], $params['order_id']);
 		$args = $this->get_curl_args($get_message_body);
 		return json_decode(wp_remote_post( $this->api_url,$args )['body']);
 	}
