@@ -33,14 +33,14 @@ class WWN_Api_Settings{
 
 	public function send_welcome_message($user_mobile,$oder_id,$customer_name){	 
 		if(!empty($this->token)){
-			$get_message_body = $this->create_message_body($user_mobile,get_option( 'wc_setting_thank_template' ));
+			$welcome_message 	= get_option( 'wc_setting_thank_template' );
+			$get_message_body 	= $this->create_message_body($user_mobile,$welcome_message,$customer_name,$oder_id);
 			$args = $this->get_curl_args($get_message_body,$oder_id,$customer_name);
-			return json_decode(wp_remote_post( $whatsapp_url,$args )['body']);
+			return json_decode(wp_remote_post( $this->api_url,$args )['body']);
 		}
 	}
 
 	public function send_message_by_changing_status($params = []){
-
 		$order_status = $params['current_status'];
 		switch ($order_status) {
 		  case "on-hold":
