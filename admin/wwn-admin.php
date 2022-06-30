@@ -156,7 +156,7 @@ class WC_Settings_Tab_WWN {
                 'id'            => 'wc_setting_refund'
             ),
             'faild'   => array(
-                'name'          => __( 'Order Refund Template: ', 'woocommerce-settings-tab-wwn' ),
+                'name'          => __( 'Order Faild Template: ', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'textarea',
                 'placeholder'   => 'Set pending payment message when admin can select the faild status.',
                 'class'         => 'template_field',
