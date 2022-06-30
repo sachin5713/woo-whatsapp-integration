@@ -28,7 +28,6 @@ if(!function_exists('wwn_registration_update')){
         $wwn_obj         = new WWN_Api_Settings();
         $billing_country = get_post_meta($order_id,'_billing_country',true);
         $customer_name   = get_post_meta($order_id,'_billing_first_name',true).' '.get_post_meta($order_id,'_billing_last_name',true);
-        $order           = wc_get_order( $order_id );
         $country_obj     = new WWN_Api_Settings_Country($billing_country);
         $order_mobile    = get_post_meta($order_id,'_billing_phone',true);
         $wwn_obj->send_welcome_message($country_obj->country.$order_mobile,$order_id,$customer_name);
