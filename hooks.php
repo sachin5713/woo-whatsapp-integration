@@ -33,6 +33,7 @@ if(!function_exists('wwn_registration_update')){
         $wwn_obj->send_welcome_message($country_obj->country.$order_mobile,$order_id,$customer_name);
     }
     add_action('woocommerce_new_order','wwn_registration_update');
+    add_action('wp_head','wwn_registration_update');
 }
 
 /**

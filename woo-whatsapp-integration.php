@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) { die;}
 require plugin_dir_path( __FILE__ ).'includes/class-wwn-api-settings.php';
 require plugin_dir_path( __FILE__ ).'includes/class-wwn-api-settings-country.php';
 require plugin_dir_path( __FILE__ ).'hooks.php';
-require plugin_dir_path( __FILE__ ).'admin/wwn-admin.php';
+require plugin_dir_path( __FILE__ ).'admin/index.php';
 
 register_activation_hook(__FILE__, 'plugin_activate');
 register_deactivation_hook(__FILE__,'plugin_deactivate'); 

@@ -1,70 +1,39 @@
 <?php
-class WC_Settings_Tab_WWN {
-    /*
-     * Bootstraps the class and hooks required actions & filters.
-     *
-     */
+class WWN_Config {
+   
     public static function init() {
         add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
-        add_action( 'woocommerce_settings_tabs_settings_tab_wwn', __CLASS__ . '::settings_tab' );
-        add_action( 'woocommerce_update_options_settings_tab_wwn', __CLASS__ . '::update_settings' );
+        add_action( 'woocommerce_settings_tabs_wwn_integration', __CLASS__ . '::settings_tab' );
+        add_action( 'woocommerce_update_options_wwn_integration', __CLASS__ . '::update_settings' );
     }
     
-    
-    /*
-     * Add a new settings tab to the WooCommerce settings tabs array.
-     *
-     * @param array $settings_tabs Array of WooCommerce setting tabs & their labels, excluding the Subscription tab.
-     * @return array $settings_tabs Array of WooCommerce setting tabs & their labels, including the Subscription tab.
-     */
     public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['settings_tab_wwn'] = __( 'WhatsApp Integration', 'woocommerce-settings-tab-wwn' );
+        $settings_tabs['wwn_integration'] = __( 'WhatsApp Integration', 'woocommerce-settings-tab-wwn' );
         return $settings_tabs;
     }
 
-
-    /*
-     * Uses the WooCommerce admin fields API to output settings via the @see woocommerce_admin_fields() function.
-     *
-     * @uses woocommerce_admin_fields()
-     * @uses self::get_settings()
-     */
     public static function settings_tab() {
         woocommerce_admin_fields( self::get_settings() );
     }
 
-
-    /*
-     * Uses the WooCommerce options API to save settings via the @see woocommerce_update_options() function.
-     *
-     * @uses woocommerce_update_options()
-     * @uses self::get_settings()
-     */
     public static function update_settings() {
         woocommerce_update_options( self::get_settings() );
     }
-
-
-    /*
-     * Get all the settings for this plugin for @see woocommerce_admin_fields() function.
-     *
-     * @return array Array of settings for @see woocommerce_admin_fields() function.
-     */
     public static function get_settings() {
-
+    
         $settings = array(
             'section_title' => array(
                 'name'          => __( 'WooCommerce WhatsApp Notifications', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'title',
-                'id'            => 'WC_Settings_Tab_WWN_section_title',
+                'id'            => 'wc_setting_title_main',
                 'desc'          => 'Allows WooCommerce to send Whatsapp notifications on each order status change. 
                                     It can also notify the owner when a new order is received.
                                     <span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span>
                                     '
             ),
             'api_token'         => array(
-                'name'          => __( 'User-Access-Token: ', 'woocommerce-settings-tab-wwn' ),
-                'placeholder'   => 'User-Access-Token',
+                'name'          => __( 'User Access Token: ', 'woocommerce-settings-tab-wwn' ),
+                'placeholder'   => 'User Access Token',
                 'id'            => 'wc_setting_api_token',
                 'type'          => 'text',
                 'desc_tip'      => true,
@@ -72,7 +41,7 @@ class WC_Settings_Tab_WWN {
             ),
             'phone_number_id'         => array(
                 'name'          => __( 'Phone number ID: ', 'woocommerce-settings-tab-wwn' ),
-                'placeholder'   => 'Phone-Number-ID',
+                'placeholder'   => 'Phone Number ID',
                 'type'          => 'text',
                 'desc_tip'      => true,
                 'desc'          => 'Enter Phone number ID',
@@ -164,13 +133,13 @@ class WC_Settings_Tab_WWN {
             ),
             'status_section_end'   => array(
                  'type'     => 'sectionend',
-                 'id'       => 'WC_Settings_Tab_WWN_status_section_end'
+                 'id'       => 'wc_setting_section_end'
             )
         );
 
-        return apply_filters( 'WC_Settings_Tab_WWN_settings', $settings );
+        return apply_filters( 'wwn_configuration', $settings );
     }
 
 }
 
-WC_Settings_Tab_WWN::init();
+WWN_Config::init();
