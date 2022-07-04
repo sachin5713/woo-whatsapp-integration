@@ -4,7 +4,6 @@ class WWN_Newsletter {
         add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
         add_action( 'woocommerce_settings_tabs_wwn_newsletter', __CLASS__ . '::settings_tab' );
         add_action( 'woocommerce_update_options_wwn_newsletter', __CLASS__ . '::update_settings' );
-
         add_action( 'woocommerce_sections',__CLASS__ . '::get_sections');
     }
 
@@ -44,13 +43,12 @@ class WWN_Newsletter {
                 'class'         => 'template_field',
             ),
             'section_end' => array(
-                 'type' => 'sectionend',
-                 'id' => 'wwn_setting_section_end'
-            )
+               'type' => 'sectionend',
+               'id' => 'wwn_setting_section_end'
+           )
         );
         return apply_filters( 'wwn_newsletter', $settings );
     }
-
 }
 
 WWN_Newsletter::init();

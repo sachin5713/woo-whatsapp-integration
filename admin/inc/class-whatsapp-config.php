@@ -1,6 +1,6 @@
 <?php
 class WWN_Config {
-   
+
     public static function init() {
         add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
         add_action( 'woocommerce_settings_tabs_wwn_integration', __CLASS__ . '::settings_tab' );
@@ -20,16 +20,16 @@ class WWN_Config {
         woocommerce_update_options( self::get_settings() );
     }
     public static function get_settings() {
-    
+
         $settings = array(
             'section_title' => array(
                 'name'          => __( 'WooCommerce WhatsApp Notifications', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'title',
                 'id'            => 'wc_setting_title_main',
                 'desc'          => 'Allows WooCommerce to send Whatsapp notifications on each order status change. 
-                                    It can also notify the owner when a new order is received.
-                                    <span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span>
-                                    '
+                It can also notify the owner when a new order is received.
+                <span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span>
+                '
             ),
             'api_token'         => array(
                 'name'          => __( 'User Access Token: ', 'woocommerce-settings-tab-wwn' ),
@@ -62,9 +62,9 @@ class WWN_Config {
                 'desc_tip'      => true,
                 'desc'          => 'Select API Version',
                 'options'       => array(
-                          'v13.0' => __( 'v13.0' ),
-                          'v14.0' => __('v14.0')
-                )
+                  'v13.0' => __( 'v13.0' ),
+                  'v14.0' => __('v14.0')
+              )
             ),
             'thankyou_msg'   => array(
                 'name'          => __( 'Welcome Template: ', 'woocommerce-settings-tab-wwn' ),
@@ -74,9 +74,9 @@ class WWN_Config {
                 'id'            => 'wc_setting_thank_template'
             ),
             'section_end'   => array(
-                 'type'         => 'sectionend',
-                 'id'           => 'WC_Settings_Tab_WWN_section_end'
-            ),
+               'type'         => 'sectionend',
+               'id'           => 'WC_Settings_Tab_WWN_section_end'
+           ),
             'status_section' => array(
                 'name'          => __( 'Order Status Templates', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'title',
@@ -132,14 +132,12 @@ class WWN_Config {
                 'id'            => 'wc_setting_faild'
             ),
             'status_section_end'   => array(
-                 'type'     => 'sectionend',
-                 'id'       => 'wc_setting_section_end'
-            )
+               'type'     => 'sectionend',
+               'id'       => 'wc_setting_section_end'
+           )
         );
-
         return apply_filters( 'wwn_configuration', $settings );
     }
-
 }
 
 WWN_Config::init();
