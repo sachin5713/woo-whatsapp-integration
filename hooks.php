@@ -61,22 +61,3 @@ if(!function_exists('wwn_order_tracking_update')){
     }
     add_action('woocommerce_order_status_changed', 'wwn_order_tracking_update', 20, 4 );
 }
-
-function test(){
-    // global $woocommerce;
-    // $country_code = 91;
-    $billing_country    = get_post_meta(135,'_billing_country',true);
-    $country_obj        = new WWN_Display_Country($billing_country);
-
-     
-        // $calling_code = is_array( $calling_code ) ? $calling_code[0] : $calling_code;
- /*    $countries_obj   = new WC_Countries();
-      $countries   = $countries_obj->__get('countries');
-      $states = WC()->countries->get_states( $order->get_shipping_country() );
-      $state  = ! empty( $states[ $order->get_shipping_state() ] ) ? $states[ $order->get_shipping_state() ] : '';*/
-    echo "<pre>";
-    print_r();
-    echo "</pre>";
-    exit;
-}
-// add_action('wp_head','test');

@@ -21,6 +21,7 @@ class WWN_Newsletter {
     }
 
     public static function get_settings() {
+        
 
         $settings = array(
             'section_title' => array(
