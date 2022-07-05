@@ -1,2 +1,35 @@
 textarea.template_field {height: 100px;}
 span.g_variable {font-size: 12px;font-weight: 700;font-style: italic;}
+.editor_icon label {
+	color: #000;
+}
+.editor_input textarea{
+	width: 30%;
+	height: 100px;
+	border: 1px solid #000;
+	border-radius: 0;
+}
+.editor_input{
+	/*margin-top: 10px;*/
+}
+.inputs{
+	visibility: hidden;
+}
+.inputs: {
+	visibility: hidden;
+}
+input[type=checkbox] + label {
+	padding: 5px;
+    margin-bottom: 5px;
+} 
+input[type=checkbox]:checked + label{
+	padding: 5px;
+    margin-bottom: 5px;
+    background: #2271b1;
+    color: #fff;
+}
+label.dashicons.dashicons-paperclip {
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+}

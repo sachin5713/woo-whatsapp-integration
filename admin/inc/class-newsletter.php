@@ -4,51 +4,56 @@ class WWN_Newsletter {
         add_filter( 'woocommerce_settings_tabs_array', __CLASS__ . '::add_settings_tab', 50 );
         add_action( 'woocommerce_settings_tabs_wwn_newsletter', __CLASS__ . '::settings_tab' );
         add_action( 'woocommerce_update_options_wwn_newsletter', __CLASS__ . '::update_settings' );
-        add_action( 'woocommerce_sections',__CLASS__ . '::get_sections');
+        add_action( 'woocommerce_settings_customer_list',__CLASS__ . '::newsletter_structure');
     }
 
     public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['wwn_newsletter'] = __( 'WhatsApp Newsletter', 'woocommerce-settings-tab-demo' );
+        $settings_tabs['wwn_newsletter'] = __( 'WhatsApp Newsletter');
         return $settings_tabs;
     }
 
-    public static function settings_tab() {
-        woocommerce_admin_fields( self::get_settings() );
-    }
+    public static function settings_tab() {woocommerce_admin_fields( self::newsletter_structure() );}
+    public static function update_settings() {woocommerce_update_options( self::newsletter_structure() );}
 
-    public static function update_settings() {
-        woocommerce_update_options( self::get_settings() );
-    }
+    public function newsletter_structure() {
+        error_reporting(0);
 
-    public static function get_settings() {
-        
+        $html = '';
+        $html .= '<div class="newsletter_header">';
+        $html .= '<h2>Newsletter</h2>';
+        $html .= '</div>';
+        $html .= '<div class="newsletter_wrapper">';
 
-        $settings = array(
-            'section_title' => array(
-                'name'     => __( 'WooCommerce WhatsApp Newsletter' ),
-                'type'     => 'title',
-                'desc'     => '',
-                'id'       => 'wwn_setting_section_title'
-            ),
-            'title' => array(
-                'name' => __( 'Newsletter Title' ),
-                'type' => 'text',
-                'desc' => __( 'This is some helper text' ),
-                'id'   => 'wwn_setting_title'
-            ),
-            'description' => array(
-                'name' => __( 'Description' ),
-                'type' => 'textarea',
-                'desc' => __( '' ),
-                'id'   => 'wwn_setting_description',
-                'class'         => 'template_field',
-            ),
-            'section_end' => array(
-               'type' => 'sectionend',
-               'id' => 'wwn_setting_section_end'
-           )
-        );
-        return apply_filters( 'wwn_newsletter', $settings );
+        $html .= '<div class="newsletter_message">';
+        $html .= '<div class="editor_icon">';
+
+        $html .= '<input class="inputs" type="checkbox" id="bold" name="method" value="bold" />
+                    <label class="dashicons dashicons-editor-bold" for="bold"></label>';
+
+        $html .= '<input class="inputs" type="checkbox" id="italic" name="method" value="italic">
+                    <label class="dashicons dashicons-editor-italic" for="italic"></label>';
+
+        $html .= '<input class="inputs" type="checkbox" id="strike" name="method" value="strikethrough">
+                    <label class="dashicons dashicons-editor-strikethrough" for="strike"></label>';
+
+        $html .= '<label class="dashicons dashicons-paperclip" for="upload_file"></label>
+                    <input class="inputs" type="file" id="upload_file" name="upload_file">';
+
+        $html .= '</div>';
+
+        $html .= '<div class="editor_input">';
+        $html .= '<textarea id="textArea" name="txt_message"></textarea>';
+        $html .= '<button type="submit" class="btn_send">Send</button>';
+        $html .= '</div>';
+
+        $html .= '</div>';
+
+        $html .= '<div class="newsletter_preview">';
+        $html .= '</div>';
+
+        $html .= '</div>';
+        print_r($html);
+        return apply_filters( 'wwn_newsletter', $html );
     }
 }
 
