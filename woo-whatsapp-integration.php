@@ -23,6 +23,7 @@ if( !function_exists('wwn_activation') ) {
     function wwn_activation() {   
         require plugin_dir_path( __FILE__ ).'includes/class-wwn-api-settings.php';
         require plugin_dir_path( __FILE__ ).'hooks.php';
+        require plugin_dir_path( __FILE__ ).'ajax-hooks.php';
         require plugin_dir_path( __FILE__ ).'admin/index.php'; 
     }
     add_action('init', 'wwn_activation');
@@ -36,6 +37,8 @@ if( !function_exists('wwn_activation') ) {
  * @return 
  */
 register_deactivation_hook (__FILE__, 'wwn_deactivate');
+
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'wwn_settings_page');
 
 
 

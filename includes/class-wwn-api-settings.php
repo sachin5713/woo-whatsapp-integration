@@ -9,7 +9,7 @@ class WWN_Api_Settings{
         $this->api_url 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
     }
 
-    private function create_message_body($mobile, $body, $customer_name, $order_id){
+    private function create_message_body($mobile, $body, $customer_name, $order_id = null){
     	$message_body   = str_replace(array('{{Customer Name}}', '{{Order Number}}'), array('*'.$customer_name.'*', '*#'.$order_id.'*'), $body);
     	$this->api_args = [ "messaging_product" => "whatsapp", 
 					   	  	"preview_url" => true, 
@@ -21,7 +21,7 @@ class WWN_Api_Settings{
 		return $this->api_args; 
     }
 
-    private function get_curl_args($message_body){
+    private function get_whatsapp_args($message_body){
     	$this->curl_args = array(
 				'timeout'    => 10,
 				'headers'    => array(	'content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token),
@@ -31,11 +31,19 @@ class WWN_Api_Settings{
     	return $this->curl_args;
     }
 
+    public function send_newsletter($user_mobile, $customer_name, $message_body){	 
+		if(!empty($this->token)){
+			$get_message_body 	= $this->create_message_body($user_mobile,$message_body,$customer_name);
+			$args = $this->get_whatsapp_args($get_message_body,$oder_id,$customer_name);
+			return json_decode(wp_remote_post( $this->api_url,$args )['body']);
+		}
+	}
+
 	public function send_welcome_message($user_mobile,$oder_id,$customer_name){	 
 		if(!empty($this->token)){
 			$welcome_message 	= get_option( 'wc_setting_thank_template' );
 			$get_message_body 	= $this->create_message_body($user_mobile,$welcome_message,$customer_name,$oder_id);
-			$args = $this->get_curl_args($get_message_body,$oder_id,$customer_name);
+			$args = $this->get_whatsapp_args($get_message_body,$oder_id,$customer_name);
 			return json_decode(wp_remote_post( $this->api_url,$args )['body']);
 		}
 	}
@@ -70,7 +78,7 @@ class WWN_Api_Settings{
 		}
 		
 		$get_message_body = $this->create_message_body($params['customer_mobile'], $message_body, $params['customer_name'], $params['order_id']);
-		$args = $this->get_curl_args($get_message_body);
+		$args = $this->get_whatsapp_args($get_message_body);
 		return json_decode(wp_remote_post( $this->api_url,$args )['body']);
 	}
 }

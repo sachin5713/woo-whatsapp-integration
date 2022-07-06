@@ -16,44 +16,32 @@ class WWN_Newsletter {
     public static function update_settings() {woocommerce_update_options( self::newsletter_structure() );}
 
     public function newsletter_structure() {
-        error_reporting(0);
-
+        // error_reporting(0);
+        $settings = array('section_title' => array('type'=> 'title','id'=>'wc_setting_title_main'));
         $html = '';
+        if($_GET['tab'] == 'wwn_newsletter'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
         $html .= '<div class="newsletter_header">';
-        $html .= '<h2>Newsletter</h2>';
-        $html .= '</div>';
-        $html .= '<div class="newsletter_wrapper">';
-
-        $html .= '<div class="newsletter_message">';
-        $html .= '<div class="editor_icon">';
-
-        $html .= '<input class="inputs" type="checkbox" id="bold" name="method" value="bold" />
-                    <label class="dashicons dashicons-editor-bold" for="bold"></label>';
-
-        $html .= '<input class="inputs" type="checkbox" id="italic" name="method" value="italic">
-                    <label class="dashicons dashicons-editor-italic" for="italic"></label>';
-
-        $html .= '<input class="inputs" type="checkbox" id="strike" name="method" value="strikethrough">
-                    <label class="dashicons dashicons-editor-strikethrough" for="strike"></label>';
-
-        $html .= '<label class="dashicons dashicons-paperclip" for="upload_file"></label>
-                    <input class="inputs" type="file" id="upload_file" name="upload_file">';
-
+        $html .= '<h2>WooCommerce Newsletter</h2>';
+        $html .= '<p>Allows WooCommerce to send Whatsapp Newsletter on new offers.<span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span></p>';
         $html .= '</div>';
 
-        $html .= '<div class="editor_input">';
-        $html .= '<textarea id="textArea" name="txt_message"></textarea>';
-        $html .= '<button type="submit" class="btn_send">Send</button>';
+        $html .= '<div class="newsletter_wrapper">
+                    <div class="newsletter_message"><div class="editor_icon">
+                        <a href="javascript:" id="bold"><i class="dashicons dashicons-editor-bold"></i></a>
+                        <a href="javascript:" id="italic"><i class="dashicons dashicons-editor-italic"></i></a>
+                        <a href="javascript:" id="strike"><i class="dashicons dashicons-editor-strikethrough"></i></a>
+                        <a href="javascript:" id="monospace"><i class="dashicons dashicons-format-quote"></i></a>';
         $html .= '</div>';
 
+        $html .= '<div class="editor_input"><textarea id="textArea" name="txt_message"></textarea></div>';
+        $html .= '<button type="submit" class="button-primary btn_msgsend">Send</button>';
         $html .= '</div>';
 
-        $html .= '<div class="newsletter_preview">';
-        $html .= '</div>';
+        $html .= '<div class="newsletter_preview"></div>';
 
         $html .= '</div>';
-        print_r($html);
-        return apply_filters( 'wwn_newsletter', $html );
+        echo $html;
+        return apply_filters( 'wwn_newsletter', $settings );
     }
 }
 

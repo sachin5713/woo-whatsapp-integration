@@ -61,5 +61,3 @@ if(!function_exists('wwn_order_tracking_update')){
     }
     add_action('woocommerce_order_status_changed', 'wwn_order_tracking_update', 20, 4 );
 }
-
-

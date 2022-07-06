@@ -141,3 +141,8 @@ class WWN_Config {
 }
 
 WWN_Config::init();
+
+function wwn_settings_page($links) {
+    $links[] = '<a href="'.admin_url( 'admin.php' ).'?page=wc-settings&tab=wwn_integration'.'">' .esc_html('Settings', 'settings_tab_wwn'). '</a>';
+    return $links;
+}

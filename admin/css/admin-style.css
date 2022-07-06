@@ -1,13 +1,17 @@
 textarea.template_field {height: 100px;}
 span.g_variable {font-size: 12px;font-weight: 700;font-style: italic;}
-.editor_icon label {
-	color: #000;
+.editor_icon a {
+	    padding: 5px;
+    border: 1px solid #000;
+    color: #000;
+    text-decoration: none;
 }
 .editor_input textarea{
-	width: 30%;
+	width: 100%;
 	height: 100px;
 	border: 1px solid #000;
 	border-radius: 0;
+	margin-top: 2px;
 }
 .editor_input{
 	/*margin-top: 10px;*/
@@ -32,4 +36,21 @@ label.dashicons.dashicons-paperclip {
     padding: 5px;
     margin-bottom: 5px;
     margin-left: 15px;
+}
+.newsletter_wrapper{
+	display: flex;
+}
+.newsletter_preview{
+	    height: 100px;
+    /*width: 500px;*/
+    border: 1px dotted;
+}
+.newsletter_message, .newsletter_preview {
+    width: 40%;
+}
+.newsletter_preview {
+    display: block;
+    margin-top: 22px;
+    margin-left: 10px;
+    background: #fff;
 }
