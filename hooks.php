@@ -11,10 +11,17 @@ if(!function_exists('wwn_load_admin_scripts')){
         wp_register_script('wwn-admin-script',plugin_dir_url( __FILE__ ).'admin/js/functions.js', array('jquery'), '1.0.0', true);
         wp_register_style('wwn-admin-style', plugin_dir_url( __FILE__ ).'admin/css/admin-style.css');
         wp_enqueue_script('wwn-admin-script'); 
-        wp_enqueue_style('wwn-admin-style'); 
+        wp_enqueue_style('wwn-admin-style');
+
+        $script_params = array(
+           'gif_url' => plugin_dir_url( __FILE__ ).'/admin/img/loader.gif',
+       );
+
+       wp_localize_script( 'wwn-admin-script', 'ajax_obj', $script_params ); 
     }
     add_action( 'admin_enqueue_scripts', 'wwn_load_admin_scripts' );
 }
+
 
 /**
  * Send Whatsapp message to every new order to the registered number

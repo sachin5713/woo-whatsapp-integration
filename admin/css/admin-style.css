@@ -54,3 +54,67 @@ label.dashicons.dashicons-paperclip {
     margin-left: 10px;
     background: #fff;
 }
+.wwn_message_wrapper input{
+    width: 400px;
+}
+.wwn_message_wrapper th{
+    text-align: left;
+    font-size: 14px;
+    color: #1d2327;
+    padding: 20px 10px 20px 0;
+    vertical-align: top;
+    width: 200px;
+    line-height: 1.3;
+    font-weight: 600;
+}
+.wwn_message_wrapper textarea{
+    width: 400px;
+    height: 100px;
+}
+button#btn_submit {
+    background: #2271b1;
+    border-color: #2271b1;
+    color: #fff;
+    text-decoration: none;
+    text-shadow: none;
+    cursor: pointer;
+}
+button#btn_submit:hover{
+   background: #135e96;
+    border-color: #135e96;
+    color: #fff; 
+}
+.notification {
+    background: red;
+    width: 20%;
+    color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    position: fixed;
+    right: 500px;
+}
+img.loader {
+    margin-bottom: -7px;
+}
+
+/**/
+/*.wwn_message_wrapper{
+    float: right;
+}
+.wwn_message_wrapper .status{
+    display: flex;
+    align-items: center;
+}
+.wwn_message_wrapper .status img,
+.wwn_message_wrapper .status p{
+    margin-right: 10px;
+}
+.wwn_message_wrapper .status p a{
+    text-decoration: none;
+}
+.wwn_message_wrapper .status span{
+    display: flex;
+}*/

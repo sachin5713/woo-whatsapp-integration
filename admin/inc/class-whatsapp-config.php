@@ -20,16 +20,30 @@ class WWN_Config {
         woocommerce_update_options( self::get_settings() );
     }
     public static function get_settings() {
+        ob_start();
+        $temp_data = get_option('order_template_data');
+        $temp_name = !empty($temp_data['name']) ? $temp_data['name'] : '';
+        $temp_head = !empty($temp_data['components'][0]['text']) ? $temp_data['components'][0]['text'] : '';
+        $temp_body = !empty($temp_data['components'][1]['text']) ? $temp_data['components'][1]['text'] : '';
+        $temp_foot = !empty($temp_data['components'][2]['text']) ? $temp_data['components'][2]['text'] : '';
 
-        $settings = array(
+        if(!empty($temp_name)){ $approval = 'disabled';  }
+        $get_obj = new WWN_Api_Settings();
+        $status  = $get_obj->get_approved_templates($temp_name);
+        if($status === 'APPROVED'){
+            $status_src = plugin_dir_url( __FILE__ ).'/img/green.png';
+        } elseif($status === 'PENDING'){
+            $status_src = plugin_dir_url( __FILE__ ).'/img/orange.png';
+        } elseif($status === 'REJECTED'){
+            $status_src = plugin_dir_url( __FILE__ ).'/img/red.png';
+        } 
+
+        $html = '';
+            $settings = array(
             'section_title' => array(
-                'name'          => __( 'WooCommerce WhatsApp Notifications', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'title',
                 'id'            => 'wc_setting_title_main',
-                'desc'          => 'Allows WooCommerce to send Whatsapp notifications on each order status change. 
-                It can also notify the owner when a new order is received.
-                <span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span>
-                '
+            
             ),
             'api_token'         => array(
                 'name'          => __( 'User Access Token: ', 'woocommerce-settings-tab-wwn' ),
@@ -66,7 +80,7 @@ class WWN_Config {
                   'v14.0' => __('v14.0')
               )
             ),
-            'thankyou_msg'   => array(
+/*            'thankyou_msg'   => array(
                 'name'          => __( 'Welcome Template: ', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'textarea',
                 'placeholder'   => 'Set thank you message when customer purchase any order.',
@@ -130,13 +144,54 @@ class WWN_Config {
                 'placeholder'   => 'Set pending payment message when admin can select the faild status.',
                 'class'         => 'template_field',
                 'id'            => 'wc_setting_faild'
-            ),
+            ),*/
             'status_section_end'   => array(
                'type'     => 'sectionend',
                'id'       => 'wc_setting_section_end'
            )
         );
+        
+        $html .="<div class='wwn_message_wrapper'><table>";
+            if($status){
+                $html .="<tr>
+                            <th>Status</th>
+                                <td class='status'><img src=".$status_src." height='10' width='10'>
+                                    <span>
+                                        <p>".$status."<p>
+                                        <a href='#' id='remove_template' data-name=".$temp_name."><span class='dashicons dashicons-dismiss'></span></a>
+                                    <span>
+                                </td>
+                            </tr>";
+                }
+                $html .="<tr>
+                            <th colspan='2'>Order Message <br>
+                            <span class='g_variable'>This message only send while new order generated</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Template Title</th>
+                            <td><input type='text' value='".$temp_name."' name='txt_temp_title' id='txt_temp_title' placeholder='Template Title' ".$approval."/>
+                        </tr>
+                        <tr>
+                            <th>Template Heading</th>
+                            <td><input type='text' value='".$temp_head."' name='txt_temp_head' id='txt_temp_head' placeholder='Template Title' ".$approval."/></td>
+                        </tr>
+                        <tr>
+                            <th>Template Body</th>
+                            <td><textarea class='txt_temp_body' name='txt_temp_body' id='txt_temp_body' placeholder='Template Body' ".$approval." >".$temp_body."</textarea></td>
+                        </tr>
+                        <tr>
+                            <th>Template Footer</th>
+                            <td><input type='text' name='txt_temp_foot' value='".$temp_foot."' id='txt_temp_foot' placeholder='Template Footer' ".$approval." /></td>
+                        </tr>
+                        <tr>
+                            <td colspan='2'><button class='button-primary' id='btn_submit' ".$approval.">Submit</button></td>
+                        </tr>
+                    </table>
+                </div>";
+        echo $html;
         return apply_filters( 'wwn_configuration', $settings );
+        ob_get_clean();
     }
 }
 

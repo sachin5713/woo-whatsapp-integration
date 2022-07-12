@@ -1,15 +1,40 @@
 <?php
 class WWN_Api_Settings{
-	protected $token = '', $api_url = '' , $api_args = '', $curl_args;
+	protected $token = '', $message_api = '' , $api_args = '', $curl_args;
 	public function __construct() {
-        $phone_id 		= get_option( 'wc_setting_phone_number_id' );
-        $version 		= get_option( 'wc_setting_version' );
-        $business_id	= get_option( 'wc_setting_business_id' );
-        $this->token 	= get_option( 'wc_setting_api_token' );
-        $this->api_url 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
+        $phone_id 			= get_option( 'wc_setting_phone_number_id' );
+        $version 			= get_option( 'wc_setting_version' );
+        $business_id		= get_option( 'wc_setting_business_id' );
+        $this->token 		= get_option( 'wc_setting_api_token' );
+        $this->message_api 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
+        $this->template_api = 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/message_templates';
     }
 
-    private function create_message_body($mobile, $body, $customer_name, $order_id = null){
+    public function request_to_register_template($param = null){
+    	$args = [
+			'timeout' => 10,'headers'    => ['content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token],
+			'body'    => json_encode($param),'sslverify'  => false ];
+		return json_decode(wp_remote_post( $this->template_api,$args )['body']);
+    }
+
+    public function get_approved_templates($template_name){
+    	$args 	= ['timeout' => 10,'headers'    => ['content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token],'sslverify'  => false ];
+    	$status = json_decode(wp_remote_get( $this->template_api.'?name='.$template_name, $args)['body']);
+    	if(!empty($template_name)){
+    		return $status->data[0]->status;	
+    	} else {
+    		return false;
+    	}
+    }
+
+    public function request_to_remove_template($template_name){
+    	$args 	= ['timeout'=>10,'method'=>'DELETE','headers'=>['content-type'=>'application/json','Authorization' =>'Bearer '.$this->token],'sslverify' => false ];
+    	return json_decode(wp_remote_request( $this->template_api.'?name='.$template_name, $args)['body']);
+    }
+
+
+
+/*    private function create_message_body($mobile, $body, $customer_name, $order_id = null){
     	$message_body   = str_replace(array('{{Customer Name}}', '{{Order Number}}'), array('*'.$customer_name.'*', '*#'.$order_id.'*'), $body);
     	$this->api_args = [ "messaging_product" => "whatsapp", 
 					   	  	"preview_url" => true, 
@@ -80,5 +105,5 @@ class WWN_Api_Settings{
 		$get_message_body = $this->create_message_body($params['customer_mobile'], $message_body, $params['customer_name'], $params['order_id']);
 		$args = $this->get_whatsapp_args($get_message_body);
 		return json_decode(wp_remote_post( $this->api_url,$args )['body']);
-	}
+	}*/
 }
