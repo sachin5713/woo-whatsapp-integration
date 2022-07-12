@@ -41,9 +41,13 @@ class WWN_Config {
         $html = '';
             $settings = array(
             'section_title' => array(
+                'name'          => __( 'WooCommerce WhatsApp Notifications', 'woocommerce-settings-tab-wwn' ),
                 'type'          => 'title',
                 'id'            => 'wc_setting_title_main',
-            
+                'desc'          => 'Allows WooCommerce to send Whatsapp notifications on each order status change. 
+                It can also notify the owner when a new order is received.
+                <span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span>
+                '
             ),
             'api_token'         => array(
                 'name'          => __( 'User Access Token: ', 'woocommerce-settings-tab-wwn' ),
