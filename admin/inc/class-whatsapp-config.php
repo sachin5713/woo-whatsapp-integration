@@ -43,7 +43,7 @@ class WWN_Config {
             $status_src = plugin_dir_url( __FILE__ ).'/img/red.png';
         }
         $html .="<div class='wwn_configuration_main'>
-                <div class'wwn_config_wrap'>
+                <div class='wwn_config_wrap'>
                 <table>
                     <tr>
                         <th>User Access Token:</th>
@@ -52,8 +52,8 @@ class WWN_Config {
                         </td>
                         <td>
                             <select name='wc_setting_version' id='wc_setting_version'>
-                                <option value='v13.0'>v13.0</option>
-                                <option value='v14.0' selected>v14.0</option>
+                                <option value='v13.0' selected>v13.0</option>
+                                <option value='v14.0'>v14.0</option>
                             </select>
                         </td>
                     </tr>
@@ -72,21 +72,21 @@ class WWN_Config {
                 </div>
                 <div class='wwn_first_template'>
                 <table>";
+                $html .= "<tr>
+                            <th colspan='2'>Order Message: <br>
+                            <span class='g_variable'>This message only send while new order generated</span>
+                            </th>
+                        </tr>";
                 if($status){
                 $html .="<tr><th>Status</th>
                             <td class='status'><img src=".$status_src." height='10' width='10'>
                                 <span><p>".$status."<p>
-                                <a href='#' id='remove_template' data-name=".$temp_name."><span class='dashicons dashicons-dismiss'></span></a>
+                                <a href='#' id='remove_template' data-name=".$temp_name." title='Delete Template'><span class='dashicons dashicons-dismiss'></span></a>
                                 <span>
                             </td>
                         </tr>";
                 }
                 $html .="<tr>
-                            <th colspan='2'>Order Message: <br>
-                            <span class='g_variable'>This message only send while new order generated</span>
-                            </th>
-                        </tr>
-                        <tr>
                             <th>Template Title</th>
                             <td><input type='text' value='".$temp_name."' name='txt_temp_title' id='txt_temp_title' placeholder='Template Title' ".$approval."/>
                         </tr>

@@ -1,25 +1,24 @@
 <?php
 class WWN_Api_Settings{
-	protected $token = '', $message_api = '' , $api_args = '', $curl_args;
+	public $token = '', $message_api = '' , $api_args = '', $curl_args;
 	public function __construct() {
-        $phone_id 			= get_option( 'wc_setting_phone_number_id' );
-        $version 			= get_option( 'wc_setting_version' );
-        $business_id		= get_option( 'wc_setting_business_id' );
-        $this->token 		= get_option( 'wwn_config_data' )['token'];
-        $this->message_api 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
-        $this->template_api = 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/message_templates';
+        $config_data		= get_option( 'wwn_config_data' );
+        $this->token 		= $config_data['token'];
+        $this->message_api 	= 'https://graph.facebook.com/v13.0/104433675661560/messages';
+        $this->template_api = 'https://graph.facebook.com/'.$config_data['version'] .'/'.$config_data['phone_id'].'/message_templates';
+        $this->template_get = 'https://graph.facebook.com/'.$config_data['version'] .'/'.$config_data['business_id'].'/message_templates';
     }
 
     public function request_to_register_template($param = null){
     	$args = [
 			'timeout' => 10,'headers'    => ['content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token],
 			'body'    => json_encode($param),'sslverify'  => false ];
-		return json_decode(wp_remote_post( $this->template_api,$args )['body']);
+		return json_decode(wp_remote_post( $this->template_get,$args )['body']);
     }
 
     public function get_approved_templates($template_name){
     	$args 	= ['timeout' => 10,'headers'    => ['content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token],'sslverify'  => false ];
-    	$status = json_decode(wp_remote_get( $this->template_api.'?name='.$template_name, $args)['body']);
+    	$status = json_decode(wp_remote_get( $this->template_get.'?name='.$template_name, $args)['body']);
     	if(!empty($template_name)){
     		return $status->data[0]->status;	
     	} else {
@@ -29,8 +28,29 @@ class WWN_Api_Settings{
 
     public function request_to_remove_template($template_name){
     	$args 	= ['timeout'=>10,'method'=>'DELETE','headers'=>['content-type'=>'application/json','Authorization' =>'Bearer '.$this->token],'sslverify' => false ];
-    	return json_decode(wp_remote_request( $this->template_api.'?name='.$template_name, $args)['body']);
+    	return json_decode(wp_remote_request( $this->template_get.'?name='.$template_name, $args)['body']);
     }
+
+	public function send_message($order_id, $template_name){	 
+		if(!empty($this->token)){
+			$billing_country = get_post_meta($order_id,'_billing_country',true);
+	        $customer_name   = get_post_meta($order_id,'_billing_first_name',true).' '.get_post_meta($order_id,'_billing_last_name',true);
+	        $calling_code    = WC()->countries->get_country_calling_code($billing_country);
+	        $order_mobile    = str_replace('+', '', $calling_code).get_post_meta($order_id,'_billing_phone',true);
+	        $message_body    = ["messaging_product" => "whatsapp", 
+				        	 	"recipient_type" => "individual", 
+				        	 	"to" 		=> $order_mobile, 
+				        	 	"type"		=> "template", 
+				        	 	"template"	=> 	["name" => $template_name, "language" => ["code" => "en"], "components" => [
+								        		["type" => "header", "parameters" => [["type" => "text", "text" => $customer_name]]], 
+								        		["type" => "BODY","parameters" => [["type" => "text","text" => get_bloginfo( 'name' )], 
+								        		["type" => "text", "text" => "*#".$order_id.'*' ]]]]]]; 
+
+			$args = ['timeout'=> 10,'headers'=> ['content-type'=>'application/json','Authorization'=>'Bearer '.$this->token],
+				 	 'body'=> json_encode($message_body),'sslverify'  => false ];
+			return json_decode(wp_remote_post($this->message_api,$args )['body']);
+		}
+	}
 
 
 

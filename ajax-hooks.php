@@ -50,17 +50,12 @@ if(!function_exists('wwn_register_template')){
             wp_send_json($json);
             exit;
         }
-        
+
         $create_temp = [
            "name" => $temp_title,
            "language" => "en", 
            "category" => "MARKETING", 
-           "components" => [
-                ["type" => "HEADER","format" => "TEXT","text" => $temp_head], 
-                ["type" => "BODY", "text"   =>  $temp_body], 
-                ["type" => "FOOTER","text"  => $temp_foot] 
-            ] 
-        ]; 
+           "components" => [["type" => "HEADER","format"=>"TEXT","text"=>$temp_head],["type"=>"BODY","text"=>$temp_body],["type" => "FOOTER","text"  => $temp_foot]]]; 
         $wwn_obj  = new WWN_Api_Settings();
         $status   = $wwn_obj->request_to_register_template($create_temp);
         if($status->error){
