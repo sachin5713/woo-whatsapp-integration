@@ -10,8 +10,12 @@ if(!function_exists('wwn_load_admin_scripts')){
     function wwn_load_admin_scripts(){ 
         wp_register_script('wwn-admin-script',plugin_dir_url( __FILE__ ).'admin/js/functions.js', array('jquery'), '1.0.0', true);
         wp_register_style('wwn-admin-style', plugin_dir_url( __FILE__ ).'admin/css/admin-style.css');
+        wp_register_style('wwn-loader-style', plugin_dir_url( __FILE__ ).'admin/css/loader.css');
+        wp_register_style('wwn-responsive-style', plugin_dir_url( __FILE__ ).'admin/css/responsive.css');
         wp_enqueue_script('wwn-admin-script'); 
         wp_enqueue_style('wwn-admin-style');
+        wp_enqueue_style('wwn-loader-style');
+        wp_enqueue_style('wwn-responsive-style');
 
         $script_params = array(
            'gif_url' => plugin_dir_url( __FILE__ ).'/admin/img/loader.gif',
@@ -41,7 +45,6 @@ if(!function_exists('wwn_registration_update')){
         $wwn_obj->send_welcome_message($country_code.$order_mobile,$order_id,$customer_name);
     }
     add_action('woocommerce_new_order','wwn_registration_update');
-    add_action('wp_head','wwn_registration_update');
 }
 
 /**

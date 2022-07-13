@@ -32,6 +32,25 @@ if(!function_exists('wwn_register_template')){
         $temp_head   = sanitize_text_field($_POST['txt_temp_head']);
         $temp_body   = sanitize_text_field($_POST['txt_temp_body']);
         $temp_foot   = sanitize_text_field($_POST['txt_temp_foot']);
+        if(empty($temp_title)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template name';
+            wp_send_json($json);
+            exit;
+        }
+        if(empty($temp_head)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template title';
+            wp_send_json($json);
+            exit;
+        }
+        if(empty($temp_body)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template body';
+            wp_send_json($json);
+            exit;
+        }
+        
         $create_temp = [
            "name" => $temp_title,
            "language" => "en", 
@@ -78,4 +97,21 @@ if(!function_exists('wwn_delete_template')){
     }
     add_action('wp_ajax_wwn_delete_template', 'wwn_delete_template');
     add_action('wp_ajax_nopriv_wwn_delete_template', 'wwn_delete_template');
+}
+
+if(!function_exists('wwn_configure_settings')){
+    function wwn_configure_settings(){
+        $json = [];
+        $config = ['token'       => sanitize_text_field($_POST['wc_setting_api_token']),
+                   'version'     => sanitize_text_field($_POST['wc_setting_version']),
+                   'phone_id'    => sanitize_text_field($_POST['wc_setting_phone_number_id']),
+                   'business_id' => sanitize_text_field($_POST['wc_setting_business_id'])];
+        update_option('wwn_config_data',array_filter($config));           
+        $json['type'] = 'success';
+        $json['message'] = 'Your settings are saved';
+        wp_send_json($json);
+        exit;
+    }
+    add_action('wp_ajax_wwn_configure_settings', 'wwn_configure_settings');
+    add_action('wp_ajax_nopriv_wwn_configure_settings', 'wwn_configure_settings');
 }

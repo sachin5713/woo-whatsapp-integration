@@ -5,7 +5,7 @@ class WWN_Api_Settings{
         $phone_id 			= get_option( 'wc_setting_phone_number_id' );
         $version 			= get_option( 'wc_setting_version' );
         $business_id		= get_option( 'wc_setting_business_id' );
-        $this->token 		= get_option( 'wc_setting_api_token' );
+        $this->token 		= get_option( 'wwn_config_data' )['token'];
         $this->message_api 	= 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/messages';
         $this->template_api = 'https://graph.facebook.com/'.$version .'/'.$phone_id.'/message_templates';
     }

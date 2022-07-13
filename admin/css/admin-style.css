@@ -54,10 +54,10 @@ label.dashicons.dashicons-paperclip {
     margin-left: 10px;
     background: #fff;
 }
-.wwn_message_wrapper input{
+.wwn_configuration_main input{
     width: 400px;
 }
-.wwn_message_wrapper th{
+.wwn_configuration_main th{
     text-align: left;
     font-size: 14px;
     color: #1d2327;
@@ -67,7 +67,7 @@ label.dashicons.dashicons-paperclip {
     line-height: 1.3;
     font-weight: 600;
 }
-.wwn_message_wrapper textarea{
+.wwn_configuration_main textarea{
     width: 400px;
     height: 100px;
 }
@@ -100,21 +100,23 @@ img.loader {
     margin-bottom: -7px;
 }
 
-/**/
-/*.wwn_message_wrapper{
-    float: right;
+.loader {
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 1s linear infinite;
 }
-.wwn_message_wrapper .status{
-    display: flex;
-    align-items: center;
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
 }
-.wwn_message_wrapper .status img,
-.wwn_message_wrapper .status p{
-    margin-right: 10px;
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-.wwn_message_wrapper .status p a{
-    text-decoration: none;
-}
-.wwn_message_wrapper .status span{
-    display: flex;
-}*/

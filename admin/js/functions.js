@@ -43,49 +43,77 @@ jQuery(document).ready(function($) {
 	})
 
 	$(document).on('click','#btn_submit',function(e){
+		window.onbeforeunload = null;
 		e.preventDefault();
 		var _serialized = $('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').serialize();
 		var dataString  = _serialized+'&action=wwn_register_template';
-		$(this).append('<img class="loader" src="'+ajax_obj.gif_url+'" width="25" height="25" />');
+		$('body').append('<div class="loading"></div>');
 		$.ajax({
             type: 'POST',
             url: ajaxurl,
             data: dataString,
             dataType: "json",
             success: function (response) {
-            	$('.loader').remove();
+            	$('.loading').remove();
             	if(response.type === 'success'){
-            		$('.wwn_message_wrapper').before("<div class='notification' style='background:green'>"+response.message+"</div>");
+            		$('.wwn_configuration_main').before("<div class='notification' style='background:green'>"+response.message+"</div>");
             		$('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').prop('disabled', true);
+            		$('#mainform').submit();
             	} else {
-            		$('.wwn_message_wrapper').before("<div class='notification'>"+response.message+"</div>");
+            		$('.wwn_configuration_main').before("<div class='notification'>"+response.message+"</div>");
             		$('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').prop('disabled', false);
             	}
-            	setTimeout(function(){ $('.notification').remove(); window.location.href=window.location.href; }, 2000);
+            	setTimeout(function(){ $('.notification').remove(); }, 2000);
             }
         });
 	});
 
 	$(document).on('click','#remove_template',function(e){
+		window.onbeforeunload = null;
 		e.preventDefault();
 		var temp_name = $(this).data('name');
 		var dataString  = 'temp_name='+temp_name+'&action=wwn_delete_template';
+		$('body').append('<div class="loading"></div>');
 		$.ajax({
             type: 'POST',
             url: ajaxurl,
             data: dataString,
             dataType: "json",
             success: function (response) {
-            	$('.loader').remove();
+            	$('.loading').remove();
             	if(response.type === 'success'){
-            		$('.wwn_message_wrapper').before("<div class='notification' style='background:green'>"+response.message+"</div>");
+            		$('.wwn_configuration_main').before("<div class='notification' style='background:green'>"+response.message+"</div>");
             		$('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').prop('disabled', true);
+            		$('#mainform').submit();
             	} else {
-            		$('.wwn_message_wrapper').before("<div class='notification'>"+response.message+"</div>");
+            		$('.wwn_configuration_main').before("<div class='notification'>"+response.message+"</div>");
             		$('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').prop('disabled', false);
             	}
-            	setTimeout(function(){ $('.notification').remove(); window.location.href=window.location.href; }, 2000);
+            	setTimeout(function(){ $('.notification').remove(); }, 2000);
             }
         });
 	});
+
+	$(document).on('click','#btn_save_settings',function(e){
+		window.onbeforeunload = null;
+		e.preventDefault();
+		var _serialized = $('#wc_setting_api_token, #wc_setting_phone_number_id, #wc_setting_version ,#wc_setting_business_id').serialize();
+		var dataString  = _serialized+'&action=wwn_configure_settings';
+		$('body').append('<div class="loading"></div>');
+		$.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: dataString,
+            dataType: "json",
+            success: function (response) {
+            	$('.loading').remove();
+            	if(response.type === 'success'){
+            		$('.wwn_configuration_main').before("<div class='notification' style='background:green'>"+response.message+"</div>");
+            		$('#txt_temp_title, #txt_temp_head, #txt_temp_body ,#txt_temp_foot').prop('disabled', true);
+            		$('#mainform').submit(); 
+            	}
+            	setTimeout(function(){ $('.notification').remove(); }, 2000);
+            }
+        });
+	})
 });
