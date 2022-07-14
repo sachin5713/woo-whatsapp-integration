@@ -27,11 +27,13 @@ if (!function_exists('send_newsletters')) {
 
 if(!function_exists('wwn_register_template')){
     function wwn_register_template(){
-        $json = [];
+        $json        = [];
+        $create_temp = [];
         $temp_title  = sanitize_text_field($_POST['txt_temp_title']);
         $temp_head   = sanitize_text_field($_POST['txt_temp_head']);
         $temp_body   = sanitize_text_field($_POST['txt_temp_body']);
         $temp_foot   = sanitize_text_field($_POST['txt_temp_foot']);
+
         if(empty($temp_title)){
             $json['type'] = 'error';
             $json['message'] = 'Please enter template name';
@@ -51,11 +53,16 @@ if(!function_exists('wwn_register_template')){
             exit;
         }
 
-        $create_temp = [
-           "name" => $temp_title,
-           "language" => "en", 
-           "category" => "MARKETING", 
-           "components" => [["type" => "HEADER","format"=>"TEXT","text"=>$temp_head],["type"=>"BODY","text"=>$temp_body],["type" => "FOOTER","text"  => $temp_foot]]]; 
+        $create_temp['name']     = $temp_title; 
+        $create_temp['language'] = 'en'; 
+        $create_temp['category'] = 'MARKETING';
+        $create_temp['components'][] = ["type" => "HEADER","format"=>"TEXT","text"=>$temp_head];
+        $create_temp['components'][] = ["type" => "BODY","text"=>$temp_body];
+
+        if(!empty($temp_foot)){
+            $create_temp['components'][] = ["type" => "FOOTER","text"  => $temp_foot];
+        }
+
         $wwn_obj  = new WWN_Api_Settings();
         $status   = $wwn_obj->request_to_register_template($create_temp);
         if($status->error){

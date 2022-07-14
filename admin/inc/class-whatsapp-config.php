@@ -30,7 +30,7 @@ class WWN_Config {
         $temp_body    =  !empty($temp_data['components'][1]['text']) ? $temp_data['components'][1]['text'] : '';
         $temp_foot    =  !empty($temp_data['components'][2]['text']) ? $temp_data['components'][2]['text'] : '';
         $get_obj      =  new WWN_Api_Settings();
-        $status       =  $get_obj->get_approved_templates($temp_name);
+        $status       =  json_decode($get_obj->get_approved_templates($temp_name))->data[0]->status;
 
         if(!empty($temp_name)){ $approval = 'disabled';  }
         if($_GET['tab'] == 'wwn_integration'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
@@ -42,72 +42,95 @@ class WWN_Config {
         } elseif($status === 'REJECTED'){
             $status_src = plugin_dir_url( __FILE__ ).'/img/red.png';
         }
-        $html .="<div class='wwn_configuration_main'>
-                <div class='wwn_config_wrap'>
-                <table>
-                    <tr>
-                        <th>User Access Token:</th>
-                        <td><input type='text' value='".$get_config['token']."' name='wc_setting_api_token' id='wc_setting_api_token' placeholder='User Access Token'/>
-                            <br><span>Get WhatsApp Authantication token: <b><a href='https://developers.facebook.com/' target='_blank'>WhatsApp</a></b></span>
-                        </td>
-                        <td>
-                            <select name='wc_setting_version' id='wc_setting_version'>
-                                <option value='v13.0' selected>v13.0</option>
-                                <option value='v14.0'>v14.0</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Phone number ID:</th>
-                        <td><input type='text' value='".$get_config['phone_id']."' name='wc_setting_phone_number_id' id='wc_setting_phone_number_id' placeholder='Phone number ID'/></td>
-                    </tr>
-                    <tr>
-                        <th>Business-ID:</th>
-                        <td><input type='text' value='".$get_config['business_id']."' name='wc_setting_business_id' id='wc_setting_business_id' placeholder='Business-ID (Optional)'/></td>
-                    </tr>
-                    <tr>
-                        <td colspan='2'><button class='button-primary' id='btn_save_settings'>Save Settings</button></td>
-                    </tr>
-                </table>
-                </div>
-                <div class='wwn_first_template'>
-                <table>";
-                $html .= "<tr>
-                            <th colspan='2'>Order Message: <br>
-                            <span class='g_variable'>This message only send while new order generated</span>
-                            </th>
-                        </tr>";
-                if($status){
-                $html .="<tr><th>Status</th>
-                            <td class='status'><img src=".$status_src." height='10' width='10'>
-                                <span><p>".$status."<p>
-                                <a href='#' id='remove_template' data-name=".$temp_name." title='Delete Template'><span class='dashicons dashicons-dismiss'></span></a>
-                                <span>
-                            </td>
-                        </tr>";
-                }
-                $html .="<tr>
-                            <th>Template Title</th>
-                            <td><input type='text' value='".$temp_name."' name='txt_temp_title' id='txt_temp_title' placeholder='Template Title' ".$approval."/>
-                        </tr>
-                        <tr>
-                            <th>Template Heading:</th>
-                            <td><input type='text' value='".$temp_head."' name='txt_temp_head' id='txt_temp_head' placeholder='Template Title' ".$approval."/></td>
-                        </tr>
-                        <tr>
-                            <th>Template Body: </th>
-                            <td><textarea class='txt_temp_body' name='txt_temp_body' id='txt_temp_body' placeholder='Template Body' ".$approval." >".$temp_body."</textarea></td>
-                        </tr>
-                        <tr>
-                            <th>Template Footer: </th>
-                            <td><input type='text' name='txt_temp_foot' value='".$temp_foot."' id='txt_temp_foot' placeholder='Template Footer (Optional)' ".$approval." /></td>
-                        </tr>
-                        <tr>
-                            <td colspan='2'><button class='button-primary' id='btn_submit' ".$approval.">Submit</button></td>
-                        </tr>
-                    </table>
-                </div>";
-        echo $html;
+        $classes  = 'input_class';
+        $versions = ['v13.0','v14.0'];
+        $setting  = ['name'=>['wc_setting_api_token','wc_setting_version','wc_setting_phone_number_id','wc_setting_business_id'], 
+                     'value'=>[$get_config['token'],$get_config['version'],$get_config['phone_id'],$get_config['business_id']],
+                     'label'=>['User Access Token','API Version','Phone number ID','Business-ID']];
+
+        $template_settings = ['name' =>['txt_temp_title','txt_temp_head','txt_temp_body','txt_temp_foot'],
+                              'value'=>[$temp_name,$temp_head,$temp_body,$temp_foot],
+                              'label'=>['Template Title','Template Heading','Template Body','Template Footer']];
+
+            $html .="<div class='wwn_configuration_main'>";
+                $html .= '<h2>WooCommerce WhatsApp Notification</h2>';
+                $html .= '<p>Allows WooCommerce to send Whatsapp Notification on their orders.</p>';
+                $html .="<div class='wwn_config_wrap'>";
+                    $html .="<table class='config_table'>";
+                        $html .= "<tr><th colspan='2'><h3>Settings</h3></th></tr>";
+                        $count = count($setting['name']);
+                        for ($i=0; $i < $count; $i++) { 
+                            if($i == 1){
+                                $html .="<tr>";
+                                $html .="<th>".$setting['label'][$i].":</th>";
+                                $html .="<td><select name=".$setting['name'][$i]." id=".$setting['name'][$i].">";
+                                    for($v = 0; $v < count($versions); $v++){
+                                        if($setting['value'][$i] === $versions[$v]){
+                                            $selected = 'selected';
+                                        } else {
+                                            $selected = '';
+                                        }
+                                       $html .= "<option value=".$versions[$v]." ".$selected.">".$versions[$v]."</option>";
+                                    }
+                                $html .="</select></td>";
+                                $html .="</tr>";
+                            } else {
+                            $html .="<tr>";
+                            $html .="<th>".$setting['label'][$i].":</th>";
+                            $html .="<td>
+                                        <input type='text' 
+                                                value='".$setting['value'][$i]."' 
+                                                name='".$setting['name'][$i]."' 
+                                                id='".$setting['name'][$i]."' 
+                                                placeholder='".$setting['label'][$i]."'/></td>";
+                            $html .="</tr>"; 
+                            }
+                        }
+                        $html .= "<tr><td colspan='2'><button class='button-primary' id='btn_save_settings'>Save Settings</button></td></tr>";
+                    $html .="</table>";
+                $html .="</div>";
+
+                $html .="<div class='wwn_first_template'>";
+                    $html .="<table class='wwn_first_template'>";
+                        $html .= "<tr><th colspan='2'><h3>Create templete for each new order</h3></th></tr>";
+                        if($status){
+                            $html .="<tr><th>Status</th>
+                                        <td class='status'><img src=".$status_src." height='10' width='10'>
+                                            <span><p>".$status."<p>
+                                            <a href='#' id='remove_template' data-name=".$temp_name."><span class='dashicons dashicons-trash' title='Delete Template'></span></span></a>
+                                            <span>
+                                        </td>
+                                    </tr>";
+                        }
+                            for ($t=0; $t < count($template_settings['name']); $t++) { 
+                                if($t != 2){
+                                    $html .="<tr>
+                                                <th>".$template_settings['label'][$t]."</th>
+                                                <td><input type='text' 
+                                                        value='".$template_settings['value'][$t]."' 
+                                                        name='".$template_settings['name'][$t]."' 
+                                                        id='".$template_settings['name'][$t]."'
+                                                        placeholder='".$template_settings['label'][$t]."' ".$approval."/>
+                                                </td>
+                                            </tr>";
+                                } else {
+                                    $html .="<tr>
+                                                <th>".$template_settings['label'][$t]."</th>
+                                                <td>
+                                                    <textarea 
+                                                    name='".$template_settings['name'][$t]."'
+                                                    id='".$template_settings['name'][$t]."'
+                                                    placeholder='".$template_settings['label'][$t]."'
+                                                    ".$approval.">".$template_settings['value'][$t]."</textarea> 
+                                                </td>
+                                            </tr>";
+                                }
+                            }
+                        $html .= "<tr><td colspan='2'><button class='button-primary' id='btn_submit' ".$approval.">Submit</button></td></tr>";
+                    $html .="</table>";
+                $html .="</div>";
+            $html .="</div>";
+            echo $html;
         return apply_filters( 'wwn_configuration', $settings );
         ob_get_clean();
     }
