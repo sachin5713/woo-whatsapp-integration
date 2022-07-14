@@ -135,3 +135,13 @@ float: left;
 .wwn_configuration_main td{
     padding: 20px 10px 20px 0;
 }
+.status span{
+    display: inherit;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+.APPROVED{background-color: green;}
+.PENDING{background-color: orange;}
+.REJECTED{background-color: red;}
+/*9879608417*/

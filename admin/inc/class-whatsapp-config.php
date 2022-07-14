@@ -95,8 +95,7 @@ class WWN_Config {
                         $html .= "<tr><th colspan='2'><h3>Create templete for each new order</h3></th></tr>";
                         if($status){
                             $html .="<tr><th>Status</th>
-                                        <td class='status'><img src=".$status_src." height='10' width='10'>
-                                            <span><p>".$status."<p>
+                                        <td><div class='status'><span class=".$status."></span><p>".$status."<p></div>
                                             <a href='#' id='remove_template' data-name=".$temp_name."><span class='dashicons dashicons-trash' title='Delete Template'></span></span></a>
                                             <span>
                                         </td>
