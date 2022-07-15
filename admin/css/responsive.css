@@ -34,9 +34,5 @@
     padding: 0px 15px;
 }
 }
-@media (max-width: 576px){
-    .wwn_configuration_main th {
-    width: 140px;
-}
-}
+
 

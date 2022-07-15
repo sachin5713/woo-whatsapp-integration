@@ -34,7 +34,7 @@ class WWN_Config {
 
         if(!empty($temp_name)){ $approval = 'disabled';  }
         if($_GET['tab'] == 'wwn_integration'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
-        $classes  = 'input_class';
+        $class  = 'text-input';
         $versions = ['v13.0','v14.0'];
         $setting  = ['name'=>['wc_setting_api_token','wc_setting_version','wc_setting_phone_number_id','wc_setting_business_id'], 
                      'value'=>[$get_config['token'],$get_config['version'],$get_config['phone_id'],$get_config['business_id']],
@@ -55,7 +55,7 @@ class WWN_Config {
                             if($i == 1){
                                 $html .="<tr>";
                                 $html .="<th>".$setting['label'][$i].":</th>";
-                                $html .="<td><select name=".$setting['name'][$i]." id=".$setting['name'][$i].">";
+                                $html .="<td><select class='".$class."' name=".$setting['name'][$i]." id=".$setting['name'][$i].">";
                                     for($v = 0; $v < count($versions); $v++){
                                         if($setting['value'][$i] === $versions[$v]){
                                             $selected = 'selected';
@@ -71,6 +71,7 @@ class WWN_Config {
                             $html .="<th>".$setting['label'][$i].":</th>";
                             $html .="<td>
                                         <input type='text' 
+                                                class='".$class."'
                                                 value='".$setting['value'][$i]."' 
                                                 name='".$setting['name'][$i]."' 
                                                 id='".$setting['name'][$i]."' 
@@ -96,8 +97,9 @@ class WWN_Config {
                             for ($t=0; $t < count($template_settings['name']); $t++) { 
                                 if($t != 2){
                                     $html .="<tr>
-                                                <th>".$template_settings['label'][$t]."</th>
+                                                <th class='template_title'>".$template_settings['label'][$t]."</th>
                                                 <td><input type='text' 
+                                                        class='".$class."'
                                                         value='".$template_settings['value'][$t]."' 
                                                         name='".$template_settings['name'][$t]."' 
                                                         id='".$template_settings['name'][$t]."'
@@ -109,6 +111,7 @@ class WWN_Config {
                                                 <th>".$template_settings['label'][$t]."</th>
                                                 <td>
                                                     <textarea 
+                                                    class='".$class."'
                                                     name='".$template_settings['name'][$t]."'
                                                     id='".$template_settings['name'][$t]."'
                                                     placeholder='".$template_settings['label'][$t]."'

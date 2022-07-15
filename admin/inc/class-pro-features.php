@@ -23,26 +23,26 @@ class WWN_Templates {
         $html   = '';
         $class  = 'text-input';
         if($_GET['tab'] == 'wwn_templates'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
-            $struct =  ['temp_hold'     => ['title' => 'On-hold Order Message',
-                                        'sub_title'  => 'This message only send while on-hold order'],
+            $struct =  ['temp_hold'     => ['title' => 'Template for Order Hold.',
+                                            'sub_title' => 'This template works when order is on hold'],
 
-                        'temp_processing'=> ['title' => 'On-processing Order Message',
-                                              'sub_title'  => 'This message only send while on-processing order'],
-                                              
-                        'temp_cancelled'=> ['title' => 'On-cancelled Order Message',
-                                              'sub_title'  => 'This message only send while on-cancelled order'],                                              
+                        'temp_processing'=> ['title' => 'Template for Order Processing.',
+                                                'sub_title' => 'This template works when order is on processing'],
 
-                        'temp_pending'  => ['title' => 'On-pending Order Message',
-                                            'sub_title'  => 'This message only send while on-pending order'],
+                        'temp_cancelled'=> ['title' => 'Template for cancelled Order.',
+                                              'sub_title' => 'This template works when order is cancelled'],                                           
 
-                        'temp_complete' => ['title'  => 'On-complete Order Message',
-                                            'sub_title'  => 'This message only send while on-complete order'],
+                        'temp_pending'  => ['title' => 'Template for Pending Order.',
+                                            'sub_title' => 'This template works when order is Pending'],    
 
-                        'temp_refund'   => ['title' => 'On-refund Order Message',
-                                            'sub_title'  => 'This message only send while on-refund order'],
+                        'temp_complete' => ['title'  => 'Template for Order Completion',
+                                            'sub_title' => 'This template works when order is Completed'],    
+
+                        'temp_refund'   => ['title' => 'Template for Refund Order.',
+                                            'sub_title' => 'This template works when order is procide to Refund'], 
                         
-                        'temp_faild'    => ['title' => 'On-faild Order Message',
-                                            'sub_title'  => 'This message only send while on-faild order']
+                        'temp_faild'    => ['title' => 'Template for Faild Order.',
+                                            'sub_title' => 'This template works when order is Faild']
                         ];
 
                 $html .="<div class='wwn_configuration_main'>"; 
@@ -58,7 +58,7 @@ class WWN_Templates {
                             $html .= "<div class='wwn_first_template'><table data-title='".$key."'>";
                             if($status){
                                 $html .= "<tr>
-                                            <th colspan='2'>".$tmp['title']."
+                                            <th colspan='2'><span>".$tmp['title']."</span>
                                                 <div class='status'><span class=".$status."></span><p>(".$status.")</p>
                                                 <a href='#' id='remove_template' data-name=".$temp_name.">
                                                     <span class='dashicons dashicons-trash' title='Delete Template'></span>
@@ -87,8 +87,10 @@ class WWN_Templates {
                                             value='".$temp_head."' 
                                             name='txt_temp_head' 
                                             id='".$key."_head' 
-                                            class='".$class."' 
+                                            class='".$class." template_header_text' 
                                             placeholder='Template Header' ".$approval."/>
+                                            <span class='text_for_header'>Dynamic Variables Customer Name: {{1}}</span>
+                                            <span class='text_for_header'>eg. Hello {{1}}. Output: Hello John Doe</span>
                                         </td>
                                      </tr>"; 
                              $html .= "<tr><th>Template Body:</th>
@@ -97,7 +99,9 @@ class WWN_Templates {
                                             id='".$key."_body' 
                                             class='".$class."' 
                                             placeholder='Template Body' ".$approval.">".$temp_body."</textarea>
+                                            <span class='text_for_company_name'>Dynamic Variables Company Name: {{1}} Order ID: {{2}}</span>
                                         </td>
+
                                      </tr>";
                             $html .= "<tr><th>Template Footer:</th>
                                         <td>
