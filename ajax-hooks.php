@@ -71,7 +71,7 @@ if(!function_exists('wwn_register_template')){
         } else {
             $json['type']    = 'success';
             $json['message'] = 'Your template has been registered with '. $status->id .' this Template ID';
-            update_option('order_template_data',$create_temp);
+            update_option('data_order_created',$create_temp);
         }
         wp_send_json($json);
         exit;
@@ -84,12 +84,13 @@ if(!function_exists('wwn_delete_template')){
     function wwn_delete_template(){
         $json = [];
         $temp_title  = sanitize_text_field($_POST['temp_name']);
+        $temp_key    = sanitize_text_field($_POST['key_name']);
         $wwn_obj     = new WWN_Api_Settings();
         $status      = $wwn_obj->request_to_remove_template($temp_title);
         if($status->success == true){
             $json['type'] = 'success';
             $json['message'] = 'Template delete successfully';
-            delete_option('order_template_data');
+            delete_option($temp_key);
         } else {
             $json['type'] = 'error';
             $json['message'] = $status->error->error_user_msg;

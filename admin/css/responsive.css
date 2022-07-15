@@ -1,38 +1,8 @@
-@media (max-width: 1350px){
-    .wwn_configuration_main .text-input-textarea {
-    width: 250px;
-}
-.wwn_configuration_main .text-input {
-    width: 250px;
-}
-.wwn_configuration_main input {
-    width: 200px;
-}
-}
-@media (max-width: 1024px){
-    .wwn_config_wrap, .wwn_first_template {
-     width: 100%; 
-    float: left;
-}
-.wwn_configuration_main .text-input,
-.wwn_configuration_main .text-input-textarea{
-    width: 400px;
-}
-}
-@media (max-width: 767px){
-    .wwn_first_template table{
-        width: 100%;
-    }
-    .wwn_configuration_main .text-input,
-.wwn_configuration_main .text-input-textarea{
-    width: 100%;
-}
-.wwn_configuration_main .text-input-textarea, .wwn_configuration_main .text-input {
-    font-size: 13px;
-}
-.wwn_first_template .submit-btn {
-    padding: 0px 15px;
-}
-}
-
-
+@media (max-width: 1350px){.wwn_configuration_main .text-input-textarea {width: 250px;}.wwn_configuration_main .text-input {width: 250px;}.wwn_configuration_main input {width: 200px;}}
+@media (max-width: 1024px){.wwn_config_wrap, .wwn_first_template {width: 100%; float: left;}.wwn_configuration_main .text-input,.wwn_configuration_main .text-input-textarea{width: 400px;}}
+@media (max-width: 767px){.wwn_first_template table{width: 100%;}.wwn_configuration_main .text-input,.wwn_configuration_main .text-input-textarea{width: 100%;}.wwn_configuration_main .text-input-textarea, .wwn_configuration_main .text-input {font-size: 13px;}.wwn_first_template .submit-btn {padding: 0px 15px;}
+@media (max-width: 400px){.wwn_configuration_main th {width: 80px;}}
+@media (max-width: 576px){.wwn_configuration_main th {width: 120px;}}
+@media (max-width: 1024px){.wwn_first_template .text_for_company_name{width: 400px;}}
+@media (max-width: 767px){.wwn_first_template .text_for_company_name{width: 100%;font-size: 12px;} .config_table{width: 100%;}.config_table  td,.config_table td{width: 75% !important;display: revert !important;}.config_table  td select{width: 100px !important;}}
+@media (max-width: 1350px){.wwn_configuration_main .text-input {width: 90%;}}

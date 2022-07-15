@@ -72,7 +72,8 @@ jQuery(document).ready(function($) {
 		window.onbeforeunload = null;
 		e.preventDefault();
 		var temp_name = $(this).data('name');
-		var dataString  = 'temp_name='+temp_name+'&action=wwn_delete_template';
+		var temp_key  = $(this).data('key');
+		var dataString  = 'temp_name='+temp_name+'&key_name='+temp_key+'&action=wwn_delete_template';
 		$('body').append('<div class="loading"></div>');
 		$.ajax({
             type: 'POST',

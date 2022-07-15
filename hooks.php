@@ -34,7 +34,7 @@ if(!function_exists('wwn_load_admin_scripts')){
 if(!function_exists('wwn_send_every_new_order')){
     function wwn_send_every_new_order($order_id){
         $wwn_obj       = new WWN_Api_Settings();
-        $template_name = get_option('order_template_data')['name'];
+        $template_name = get_option('data_order_created')['name'];
         $wwn_obj->send_message($order_id, $template_name);
     }
     add_action('woocommerce_new_order','wwn_send_every_new_order');

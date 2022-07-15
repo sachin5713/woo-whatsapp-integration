@@ -24,7 +24,7 @@ class WWN_Config {
         $html         =  '';
         $settings     =  array('section_title' => array('type'=> 'title','id'=>'wc_setting_title_main'));
         $get_config   =  get_option('wwn_config_data');
-        $temp_data    =  get_option('order_template_data');
+        $temp_data    =  get_option('data_order_created');
         $temp_name    =  !empty($temp_data['name']) ? $temp_data['name'] : '';
         $temp_head    =  !empty($temp_data['components'][0]['text']) ? $temp_data['components'][0]['text'] : '';
         $temp_body    =  !empty($temp_data['components'][1]['text']) ? $temp_data['components'][1]['text'] : '';
@@ -89,7 +89,8 @@ class WWN_Config {
                         if($status){
                             $html .="<tr class='status_indicater'><th>Status</th>
                                         <td><div class='status'><span class=".$status."></span><p>".$status."<p></div>
-                                            <a href='#' id='remove_template' data-name=".$temp_name."><span class='dashicons dashicons-trash' title='Delete Template'></span></span></a>
+                                            <a href='#' id='remove_template' data-name='".$temp_name."' data-key='data_order_created'>
+                                            <span class='dashicons dashicons-trash' title='Delete Template'></span></span></a>
                                             <span>
                                         </td>
                                     </tr>";

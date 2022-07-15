@@ -60,7 +60,7 @@ class WWN_Templates {
                                 $html .= "<tr>
                                             <th colspan='2'><span>".$tmp['title']."</span>
                                                 <div class='status'><span class=".$status."></span><p>(".$status.")</p>
-                                                <a href='#' id='remove_template' data-name=".$temp_name.">
+                                                <a href='#' id='remove_template' data-name=".$temp_name." data-key='data_".$key."'>
                                                     <span class='dashicons dashicons-trash' title='Delete Template'></span>
                                                 </a>
                                                 </div>  
