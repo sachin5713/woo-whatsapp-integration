@@ -117,3 +117,59 @@ if(!function_exists('wwn_configure_settings')){
     add_action('wp_ajax_wwn_configure_settings', 'wwn_configure_settings');
     add_action('wp_ajax_nopriv_wwn_configure_settings', 'wwn_configure_settings');
 }
+
+/*Pro-Version only*/
+if(!function_exists('wwn_register_status_templates')){
+    function wwn_register_status_templates(){
+        $json        = [];
+        $create_temp = [];
+        $temp_title  = sanitize_text_field($_POST['txt_temp_title']);
+        $temp_head   = sanitize_text_field($_POST['txt_temp_head']);
+        $temp_body   = sanitize_text_field($_POST['txt_temp_body']);
+        $temp_foot   = sanitize_text_field($_POST['txt_temp_foot']);
+        $temp_name   = sanitize_text_field($_POST['temp_name']);
+        if(empty($temp_title)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template name';
+            wp_send_json($json);
+            exit;
+        }
+        if(empty($temp_head)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template title';
+            wp_send_json($json);
+            exit;
+        }
+        if(empty($temp_body)){
+            $json['type'] = 'error';
+            $json['message'] = 'Please enter template body';
+            wp_send_json($json);
+            exit;
+        }
+
+        $create_temp['name']     = $temp_title; 
+        $create_temp['language'] = 'en'; 
+        $create_temp['category'] = 'MARKETING';
+        $create_temp['components'][] = ["type" => "HEADER","format"=>"TEXT","text"=>$temp_head];
+        $create_temp['components'][] = ["type" => "BODY","text"=>$temp_body];
+
+        if(!empty($temp_foot)){
+            $create_temp['components'][] = ["type" => "FOOTER","text"  => $temp_foot];
+        }
+
+        $wwn_obj  = new WWN_Api_Settings();
+        $status   = $wwn_obj->request_to_register_template($create_temp);
+        if($status->error){
+            $json['type']    = 'error';
+            $json['message'] = $status->error->error_user_msg;
+        } else {
+            $json['type']    = 'success';
+            $json['message'] = 'Your template has been registered with '. $status->id .' this Template ID';
+            update_option('data_'.$temp_name,$create_temp);
+        }
+        wp_send_json($json);
+        exit;
+    }
+    add_action('wp_ajax_wwn_register_status_templates', 'wwn_register_status_templates');
+    add_action('wp_ajax_nopriv_wwn_register_status_templates', 'wwn_register_status_templates');
+}

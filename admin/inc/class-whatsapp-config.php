@@ -34,14 +34,6 @@ class WWN_Config {
 
         if(!empty($temp_name)){ $approval = 'disabled';  }
         if($_GET['tab'] == 'wwn_integration'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
-
-        if($status === 'APPROVED'){
-            $status_src = plugin_dir_url( __FILE__ ).'/img/green.png';
-        } elseif($status === 'PENDING'){
-            $status_src = plugin_dir_url( __FILE__ ).'/img/orange.png';
-        } elseif($status === 'REJECTED'){
-            $status_src = plugin_dir_url( __FILE__ ).'/img/red.png';
-        }
         $classes  = 'input_class';
         $versions = ['v13.0','v14.0'];
         $setting  = ['name'=>['wc_setting_api_token','wc_setting_version','wc_setting_phone_number_id','wc_setting_business_id'], 

@@ -36,10 +36,10 @@ jQuery(document).ready(function($) {
         });
 	});
 
-	$(document).on('keypress blur','#txt_temp_title',function(){
+	$(document).on('keypress blur','#txt_temp_title,#temp_hold_title,#temp_processing_title,#temp_pending_title,#temp_complete_title,temp_refund_title,#temp_faild_title',function(){
 		var _this = $(this).val();
 		_this=_this.split(' ').join('_')
-		$("#txt_temp_title").val(_this);
+		$(this).val(_this);
 	})
 
 	$(document).on('click','#btn_submit',function(e){
@@ -115,5 +115,32 @@ jQuery(document).ready(function($) {
             	setTimeout(function(){ $('.notification').remove(); }, 2000);
             }
         });
-	})
+	});
+
+	$(document).on('click','.btn_save_temp',function(e){
+		window.onbeforeunload = null;
+		e.preventDefault();
+
+		var temp_id     = $(this).attr('id');
+		var temp_name   = $(this).parents('table').data('title');
+		var get_values  = $(this).parents('table').find('input,textarea').serialize();
+		var dataString  = get_values+'&action=wwn_register_status_templates&temp_name='+temp_name;
+		$('body').append('<div class="loading"></div>');
+		$.ajax({
+            type: 'POST',
+            url: ajaxurl,
+            data: dataString,
+            dataType: "json",
+            success: function (response) {
+            	$('.loading').remove();
+            	if(response.type === 'success'){
+            		$('.wwn_configuration_main').before("<div class='notification' style='background:green'>"+response.message+"</div>");
+            		$('#mainform').submit();
+            	} else {
+            		$('.wwn_configuration_main').before("<div class='notification'>"+response.message+"</div>");
+            	}
+            	setTimeout(function(){ $('.notification').remove(); }, 2000);
+            }
+        });
+	});
 });

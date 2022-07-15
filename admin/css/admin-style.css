@@ -144,4 +144,48 @@ float: left;
 .APPROVED{background-color: green;}
 .PENDING{background-color: orange;}
 .REJECTED{background-color: red;}
+#remove_template{color: red}
+
+/**/
+.wwn_configuration_main .text-input-textarea,
+.wwn_configuration_main .text-input {
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.wwn_configuration_main th {
+    width: 160px;
+}
+.wwn_first_template .submit-btn {
+    float: right;
+    padding: 3px 20px;
+    font-size: 15px;
+}
+.wwn_configuration_main th,
+.wwn_configuration_main td {
+    padding: 5px 10px 5px 0;
+}
+.wwn_configuration_main th{
+    font-size: 16px;
+}
+.wwn_configuration_main .text-input-textarea:focus,
+.wwn_configuration_main .text-input:focus{
+   color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%); 
+}
+.subtitle_for_cancelled_order{
+    color: #797b7c;
+}
+
 

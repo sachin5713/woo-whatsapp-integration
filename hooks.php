@@ -47,21 +47,57 @@ if(!function_exists('wwn_send_every_new_order')){
  * @author Silverwebbuzz <www.silverwebbuzz.com>
  * @return 
  */
-// if(!function_exists('wwn_order_tracking_update')){
-//     function wwn_order_tracking_update( $order_id, $old_status, $new_status, $order ){
-//         $customer_name      = get_post_meta($order_id,'_billing_first_name',true).' '.get_post_meta($order_id,'_billing_last_name',true);
-//         $billing_country    = get_post_meta($order_id,'_billing_country',true);
-//         $order_mobile       = get_post_meta($order_id,'_billing_phone',true);
-//         $calling_code       = WC()->countries->get_country_calling_code($billing_country);
-//         $country_code       = str_replace('+', '', $calling_code);
-//         $wwn_obj            = new WWN_Api_Settings();
-//         $wwn_status_param   =   [   'order_id'       => $order_id,
-//                                     'current_status' => $new_status,
-//                                     'customer_name'  => $customer_name,
-//                                     'customer_mobile'=> $country_code.$order_mobile,
-//                                 ];
-//        $wwn_obj->send_message_by_changing_status($wwn_status_param);
-//     }
-//     add_action('woocommerce_order_status_changed', 'wwn_order_tracking_update', 20, 4 );
-// }
+if(!function_exists('wwn_order_tracking_update')){
+    function wwn_order_tracking_update( $order_id, $old_status, $new_status, $order ){
+        $temp_hold     = get_option('data_temp_hold')['name'];
+        $temp_process  = get_option('data_temp_processing')['name'];
+        $temp_pending  = get_option('data_temp_pending')['name'];
+        $temp_complete = get_option('data_temp_complete')['name'];
+        $temp_refund   = get_option('data_temp_refund')['name'];
+        $temp_faild    = get_option('data_temp_faild')['name'];
+        $temp_cancel   = get_option('data_temp_cancelled')['name'];
+        $template_name = '';
+        switch ($new_status) {
+          case "on-hold":
+            if(!empty($temp_hold)){
+                $template_name = $temp_hold;
+            }
+            break;
+          case "pending":
+            if(!empty($temp_pending)){
+                $template_name = $temp_pending;
+            }
+            break;
+          case "processing":
+            if(!empty($temp_process)){
+                $template_name = $temp_process;
+            }
+            break;
+          case "completed":
+           if(!empty($temp_complete)){
+                $template_name = $temp_complete;
+            }
+            break;
+          case "cancelled":
+            if(!empty($temp_cancel)){
+                $template_name = $temp_cancel;
+            }
+            break;
+          case "refunded":
+            if(!empty($temp_refund)){
+                $template_name = $temp_refund;
+            }
+            break;
+          case "failed":
+            if(!empty($temp_faild)){
+                $template_name = $temp_faild;
+            }
+            break;
+          default:
+        }
+        $wwn_obj = new WWN_Api_Settings();
+        $wwn_obj->send_message($order_id, $template_name);
+    }
+    add_action('woocommerce_order_status_changed', 'wwn_order_tracking_update', 20, 4 );
+}
 
