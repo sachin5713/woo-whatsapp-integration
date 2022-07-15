@@ -309,3 +309,18 @@ width: 230px;
     width: 110px !important;
 }
 }
+.wwn_first_template .status_indicater,
+.wwn_first_template .status_indicater td,
+.wwn_first_template .status_indicater td .status{
+    display: flex;
+    align-items: center;
+}
+.wwn_first_template .status_indicater td .status p{
+    margin-left: 15px;
+}
+.wwn_first_template .status_indicater td  a{
+    text-decoration: none;
+}
+.wwn_first_template .status_indicater th{
+    width: 50px;
+}
