@@ -80,7 +80,7 @@ class WWN_Config {
                 $html .="</div>";
 
                 $html .="<div class='wwn_first_template'>";
-                    $html .="<table class='wwn_first_template'>";
+                    $html .="<table class=''>";
                         $html .= "<tr><th colspan='2'><h3>Create templete for each new order</h3></th></tr>";
                         if($status){
                             $html .="<tr class='status_indicater'><th>Status</th>
@@ -94,7 +94,7 @@ class WWN_Config {
                             for ($t=0; $t < count($template_settings['name']); $t++) { 
                                 if($t != 2){
                                     $html .="<tr>
-                                                <th class='template_title'>".$template_settings['label'][$t]."</th>
+                                                <th class='template_title'>".$template_settings['label'][$t].": </th>
                                                 <td><input type='text' 
                                                         class='".$class."'
                                                         value='".$template_settings['value'][$t]."' 
@@ -105,7 +105,7 @@ class WWN_Config {
                                             </tr>";
                                 } else {
                                     $html .="<tr>
-                                                <th>".$template_settings['label'][$t]."</th>
+                                                <th>".$template_settings['label'][$t].": </th>
                                                 <td>
                                                     <textarea 
                                                     class='".$class."'

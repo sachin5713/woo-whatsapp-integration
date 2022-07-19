@@ -8,7 +8,7 @@ class WWN_Templates {
     }
 
     public static function add_settings_tab( $settings_tabs ) {
-        $settings_tabs['wwn_templates'] = __( 'Templates (Pro Features)');
+        $settings_tabs['wwn_templates'] = __( 'Templates (Pro)');
         return $settings_tabs;
     }
 
@@ -22,29 +22,23 @@ class WWN_Templates {
         $status       =  json_decode($get_obj->get_approved_templates($temp_name))->data[0]->status;
         $html   = '';
         $class  = 'text-input';
-        if($_GET['tab'] == 'wwn_templates'){ $html .='<style>.woocommerce-save-button{display:none !important;}</style>'; }
+        if($_GET['tab'] == 'wwn_templates'){ 
+            $html .='<style>.woocommerce-save-button{display:none !important;}.wwn_first_template{pointer-events: none;}
+            .wwn_configuration_main{cursor: no-drop;filter: opacity(0.5);}</style>'; }
             $struct =  ['temp_hold'     => ['title' => 'Template for Order Hold.',
                                             'sub_title' => 'This template works when order is on hold'],
-
-                        'temp_processing'=> ['title' => 'Template for Order Processing.',
-                                                'sub_title' => 'This template works when order is on processing'],
-
+                        'temp_processing'=>['title' => 'Template for Order Processing.',
+                                            'sub_title' => 'This template works when order is on processing'],
                         'temp_cancelled'=> ['title' => 'Template for cancelled Order.',
                                               'sub_title' => 'This template works when order is cancelled'],                                           
-
                         'temp_pending'  => ['title' => 'Template for Pending Order.',
                                             'sub_title' => 'This template works when order is Pending'],    
-
                         'temp_complete' => ['title'  => 'Template for Order Completion',
                                             'sub_title' => 'This template works when order is Completed'],    
-
                         'temp_refund'   => ['title' => 'Template for Refund Order.',
                                             'sub_title' => 'This template works when order is procide to Refund'], 
-                        
                         'temp_faild'    => ['title' => 'Template for Faild Order.',
-                                            'sub_title' => 'This template works when order is Faild']
-                        ];
-
+                                            'sub_title' => 'This template works when order is Faild']];
                 $html .="<div class='wwn_configuration_main'>"; 
                 if(!empty($struct)) {
                         foreach ($struct as $key => $tmp) {

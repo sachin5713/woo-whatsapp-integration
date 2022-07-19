@@ -11,10 +11,6 @@
   bottom: 0;
   right: 0;
 }
-.wwn_first_template{
-  pointer-events: none;
-}
-.wwn_configuration_main{cursor: no-drop;filter: opacity(0.5);}
 /* Transparent Overlay */
 .loading:before {
   content: '';

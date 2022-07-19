@@ -2,3 +2,4 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+delete_option('wwn_config_data');

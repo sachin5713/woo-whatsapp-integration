@@ -5,4 +5,23 @@
 @media (max-width: 576px){.wwn_configuration_main th {width: 120px;}}
 @media (max-width: 1024px){.wwn_first_template .text_for_company_name{width: 400px;}}
 @media (max-width: 767px){.wwn_first_template .text_for_company_name{width: 100%;font-size: 12px;} .config_table{width: 100%;}.config_table  td,.config_table td{width: 75% !important;display: revert !important;}.config_table  td select{width: 100px !important;}}
-@media (max-width: 1350px){.wwn_configuration_main .text-input {width: 90%;}}
+@media (max-width: 575px){
+	.config_table tr, .wwn_first_template table tr{
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.wwn_configuration_main th, .wwn_configuration_main th{
+		width:  100%;
+	}
+	.template_title, .wwn_configuration_main td{
+		width:  100% !important;
+	}
+	.wwn_config_wrap table tr td:nth-child(2), .wwn_configuration_main td:nth-child(2){
+		margin-top: 0;
+		margin-bottom: 7px;
+	}
+	.wwn_configuration_main .text-input-textarea, .wwn_configuration_main .text-input{
+		margin-left: 0;
+		margin-right: 0;
+	}
+}

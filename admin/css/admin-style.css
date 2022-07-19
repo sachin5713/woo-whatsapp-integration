@@ -19,7 +19,7 @@ button#btn_submit:hover{background: #135e96;border-color: #135e96;color: #fff; }
 .notification {background: red;width: 20%;color: #fff;border-radius: 5px;text-align: center;padding-top: 10px;padding-bottom: 10px;font-weight: 600;position: fixed;right: 500px;}
 img.loader {margin-bottom: -7px;}
 .wwn_configuration_main{width: 100%;float: left;}
-.wwn_config_wrap,.wwn_first_template {width: 50%;float: left;}
+.wwn_config_wrap, .wwn_first_template {width: 50%;float: left;}
 .wwn_first_template table td.status{display: flex;align-items: center;}
 .wwn_first_template table td.status span{display: flex;}
 .wwn_first_template table td.status span p{margin-left: 15px;margin-right: 15px;}
@@ -34,7 +34,6 @@ img.loader {margin-bottom: -7px;}
 #remove_template{color: red}
 .wwn_configuration_main .text-input-textarea,
 .wwn_configuration_main .text-input {padding: .375rem .75rem;font-size: 1rem;color: #212529;background-color: #fff;background-clip: padding-box;border: 1px solid #ced4da;-webkit-appearance: none;-moz-appearance: none;appearance: none;border-radius: .25rem;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
-.wwn_configuration_main th {width: 160px;}
 .wwn_first_template .submit-btn {float: right;padding: 3px 20px;font-size: 15px;}
 .wwn_configuration_main th,.wwn_configuration_main td {padding: 5px 10px 5px 0;}
 .wwn_configuration_main th{font-size: 16px;}
@@ -61,8 +60,7 @@ width: 230px;padding: 5px 10px 5px 0;}
 .wwn_first_template .text_for_company_name {display: block;width: 90%; }
 .wwn_configuration_main .text-input-textarea, .wwn_configuration_main .text-input {font-size: 12px;}
 .woocommerce-embed-page .wrap {padding: 0px 10px;}
-.config_table  td, .config_table td {width: 60% !important;}
-.template_title {display: inline-block;width: 110px !important;}
+.template_title {display: inline-block;width: 140px !important;}
 .wwn_first_template .status_indicater,
 .wwn_first_template .status_indicater td,
 .wwn_first_template .status_indicater td .status{display: flex;align-items: center;}
