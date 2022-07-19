@@ -19,6 +19,10 @@ if(!function_exists('wwn_load_admin_scripts')){
 
         $script_params = array('gif_url' => plugin_dir_url( __FILE__ ).'/admin/img/loader.gif',);
         wp_localize_script( 'wwn-admin-script', 'ajax_obj', $script_params ); 
+
+        if ( ! did_action( 'wp_enqueue_media' ) ) {
+            wp_enqueue_media();
+        }
     }
     add_action( 'admin_enqueue_scripts', 'wwn_load_admin_scripts' );
 }

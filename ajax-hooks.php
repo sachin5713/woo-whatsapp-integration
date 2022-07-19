@@ -174,3 +174,18 @@ if(!function_exists('wwn_register_status_templates')){
     add_action('wp_ajax_wwn_register_status_templates', 'wwn_register_status_templates');
     add_action('wp_ajax_nopriv_wwn_register_status_templates', 'wwn_register_status_templates');
 }
+
+if(!function_exists('wwn_upload_wp_media')){
+    function wwn_upload_wp_media(){
+        $json           = [];
+        $wwn_obj        = new WWN_Api_Settings();
+        $media_response = $wwn_obj->request_to_upload_media($_POST['attchment_url']);
+        
+        echo "<pre>";
+        print_r($media_response);
+        echo "</pre>";
+        exit;
+    }
+    add_action('wp_ajax_wwn_upload_wp_media', 'wwn_upload_wp_media');
+    add_action('wp_ajax_nopriv_wwn_upload_wp_media', 'wwn_upload_wp_media');
+}

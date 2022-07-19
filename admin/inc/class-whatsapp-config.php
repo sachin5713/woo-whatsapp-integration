@@ -125,6 +125,48 @@ class WWN_Config {
                     $html .="</table>";
                 $html .="</div>";
             $html .="</div>";
+
+
+            /*Newsletter Part*/
+            $html .= '<div class="newsletter_header">';
+            $html .= '<h2>WooCommerce Newsletter</h2>';
+            $html .= '<p>Allows WooCommerce to send Whatsapp Newsletter on new offers.<span class="g_variable">Dynamic Variables: {{Customer Name}}, {{Order Number}}, {{Order URL}}, {{Review URL}}</span></p>';
+            $html .= '</div>';
+
+            $html .= '<div class="newsletter_wrapper">
+                        <div class="newsletter_message"><div class="editor_icon">
+                            <a href="javascript:" id="bold"><i class="dashicons dashicons-editor-bold"></i></a>
+                            <a href="javascript:" id="italic"><i class="dashicons dashicons-editor-italic"></i></a>
+                            <a href="javascript:" id="strike"><i class="dashicons dashicons-editor-strikethrough"></i></a>
+                            <a href="javascript:" id="monospace"><i class="dashicons dashicons-format-quote"></i></a>
+                            <a href="javascript:" class="upload_file" id="attachment"><i class="dashicons dashicons-paperclip"></i></a>';
+            $html .= '</div>';
+            $html .= '<div class="editor_input"><textarea id="textArea" name="txt_message"></textarea>
+                        <input type="hidden" name="misha-img" value="">
+            </div>';
+            $image = wp_get_attachment_image_src( $image_id );
+                $html .= '<div class="newsletter_preview">';
+            if( $image = wp_get_attachment_image_src( $image_id ) ) {
+                $html .= '<a href="#" class="upload_file"><img class="prview_image" src="'.$image[0].'"/></a>
+                            <a href="#" class="misha-rmv">Remove image</a>
+                  <input type="hidden" name="misha-img" value="' . $image_id . '">';
+            }
+            $html .= '</div>';
+            $html .= '<button type="submit" class="button-primary btn_msgsend">Send</button>';
+
+     /*           if( $image = wp_get_attachment_image_src( $image_id ) ) {
+
+                $html .= '<a href="#" class="upload_file"><img src="' . $image[0] . '" /></a>
+                          <a href="#" class="misha-rmv">Remove image</a>
+                          <input type="hidden" name="misha-img" value="' . $image_id . '">';
+                } else {
+                    $html .= '<a href="#" class="upload_file">Upload image</a>
+                          <a href="#" class="misha-rmv" style="display:none">Remove image</a>
+                          <input type="hidden" name="misha-img" value="">';
+                } */
+
+            $html .= '</div>';
+
             echo $html;
         return apply_filters( 'wwn_configuration', $settings );
         ob_get_clean();

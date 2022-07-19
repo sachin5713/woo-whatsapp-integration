@@ -5,21 +5,21 @@ jQuery(document).ready(function($) {
 		var selection 	= (textarea.value).substring(textarea.selectionStart,textarea.selectionEnd);
 		if(ele != '' && ele == 'bold'){
 			$('#textArea').val((textarea.value).replace(selection, '*'+selection+'*'));
-			$('.newsletter_preview').html((textarea.value).replace(selection, '<b>'+selection+'</b>'));
+			// $('.newsletter_preview').html((textarea.value).replace(selection, '<b>'+selection+'</b>'));
 		} else if(ele != '' && ele == 'italic') {
 			$('#textArea').val((textarea.value).replace(selection, '_'+selection+'_'));
-			$('.newsletter_preview').html((textarea.value).replace(selection, '<i>'+selection+'</i>'));
+			// $('.newsletter_preview').html((textarea.value).replace(selection, '<i>'+selection+'</i>'));
 		} else if(ele != '' && ele == 'strike') {
 			$('#textArea').val((textarea.value).replace(selection, '~'+selection+'~'));
-			$('.newsletter_preview').html((textarea.value).replace(selection, '<s>'+selection+'</s>'));
+			// $('.newsletter_preview').html((textarea.value).replace(selection, '<s>'+selection+'</s>'));
 		} else if(ele != '' && ele == 'monospace') {
 			$('#textArea').val((textarea.value).replace(selection, '```'+selection+'```'));
-			$('.newsletter_preview').html((textarea.value).replace(selection, '<tt>'+selection+'</tt>'));
+			// $('.newsletter_preview').html((textarea.value).replace(selection, '<tt>'+selection+'</tt>'));
 		}
 	});
-	$(document).on('keypress blur','#textArea',function(){
-		$('.newsletter_preview').text($(this).val());
-	})
+	// $(document).on('keypress blur','#textArea',function(){
+	// 	$('.newsletter_preview').text($(this).val());
+	// })
 
 	$(document).on('click','.btn_msgsend',function(e){
 		e.preventDefault();
@@ -143,5 +143,50 @@ jQuery(document).ready(function($) {
             	setTimeout(function(){ $('.notification').remove(); }, 2000);
             }
         });
+	});
+
+	/*Media Upload*/
+	// on upload button click
+
+	$('body').on( 'click', '.upload_file', function(e){
+		e.preventDefault();
+		var button = $(this),
+		custom_uploader = wp.media({
+			title: 'Insert image',
+			library : {
+				type : 'image'
+			},
+			button: {
+				text: 'Use this image' // button label text
+			},
+			multiple: false
+		}).on('select', function() { // it also has "open" and "close" events
+			var attachment = custom_uploader.state().get('selection').first().toJSON();
+			// console.log(attachment.url);
+			var dataString  = 'action=wwn_upload_wp_media&attchment_url='+attachment.url+'&attachment_id='+attachment.id;
+
+			// $('	.newsletter_preview').html('<a href="#" class="upload_file">'+
+			// 	'<img class="prview_image" src="' + attachment.url + '"></a>'+
+			// 	'<a href="#" class="misha-rmv">Remove image</a>').next().show().next().val(attachment.id);
+
+			$.ajax({
+	            type: 'POST',
+	            url: ajaxurl,
+	            data: dataString,
+	            dataType: "json",
+	            success: function (response) {
+	            	console.log(response);
+	            }
+	        });
+		}).open();
+	
+	});
+
+	// on remove button click
+	$('body').on('click', '.misha-rmv', function(e){
+		e.preventDefault();
+		var button = $(this);
+		button.next().val(''); // emptying the hidden field
+		button.hide().prev().remove();
 	});
 });
