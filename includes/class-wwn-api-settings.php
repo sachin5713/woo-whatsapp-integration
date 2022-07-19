@@ -16,45 +16,6 @@ class WWN_Api_Settings{
 			'body'    => json_encode($param),'sslverify'  => false ];
 		return json_decode(wp_remote_post( $this->template_get,$args )['body']);
     }
-
-    public function request_to_upload_media($media_url){
-    	$file 		= mime_content_type($media_url);
-    	$temp   	= tmpfile();
-    	fwrite($temp, $file);
-    	$metadata 	= stream_get_meta_data($temp);
-    	$curl 		= curl_init();
-		curl_setopt_array($curl, array(
-			CURLOPT_URL => $this->media_api,
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 0,
-			CURLOPT_FOLLOWLOCATION 	=> 	true,
-			CURLOPT_SSL_VERIFYPEER 	=> 	false,
-			CURLOPT_SSL_VERIFYHOST 	=> 	false,
-			CURLOPT_FOLLOWLOCATION 	=> 	false,
-			CURLOPT_HTTP_VERSION 	=> 	CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST 	=> 	'POST',
-			CURLOPT_POSTFIELDS 		=> 	array('messaging_product' => 'whatsapp','file'=> new CURLFILE($metadata['uri'])),
-			CURLOPT_HTTPHEADER 		=> 	array('Authorization: Bearer '.$this->token ),
-		));
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-		echo "<pre>";
-		print_r($metadata);
-		echo "</pre>";
-		echo "<pre>";
-		print_r(json_decode($response));
-		echo "</pre>";
-		exit;
-		
-		echo $response;
-
-		return json_decode(wp_remote_post( $this->media_api,$args )['body']);
-    }
-
     public function get_approved_templates($template_name){
     	$args 	= ['timeout' => 10,'headers'    => ['content-type' => 'application/json','Authorization' => 'Bearer ' . $this->token],'sslverify'  => false ];
     	$status = wp_remote_get( $this->template_get.'?name='.$template_name, $args)['body'];
